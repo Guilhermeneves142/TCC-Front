@@ -1,13 +1,12 @@
 <template>
   <v-app>
-    <!-- <router-view /> -->
-    <Login />
+    <router-view />
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Login from "@/views/Login.vue";
+import Login from "@/views/Initial/Initial.vue";
 
 @Component({
   components: {
@@ -16,3 +15,9 @@ import Login from "@/views/Login.vue";
 })
 export default class App extends Vue {}
 </script>
+
+<style>
+* {
+  font-family: "Open Sans", sans-serif;
+}
+</style>

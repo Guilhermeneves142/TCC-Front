@@ -31,11 +31,11 @@
       <v-row justify="end">
         <v-col cols="auto">
           <v-btn color="primary" outlined @click="createNewUser">
-            Sign up
+            Cadastre-se
           </v-btn>
         </v-col>
         <v-col cols="auto">
-          <v-btn depressed color="primary"> Log in </v-btn>
+          <v-btn depressed color="primary"> Entrar </v-btn>
         </v-col>
       </v-row>
     </v-card-actions>
@@ -47,7 +47,7 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Login extends Vue {
-  createNewUser() {
+  createNewUser(): void {
     this.$router.push({ name: "NewUser" });
   }
 }

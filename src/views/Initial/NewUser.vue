@@ -103,28 +103,49 @@
               >
             </v-col>
             <v-col cols="auto">
-              <v-btn color="primary">Cadastrar</v-btn>
+              <v-btn color="primary" @click="save">Cadastrar</v-btn>
             </v-col>
           </v-row>
         </v-card-actions>
       </div>
     </div>
+    <v-snackbar
+      v-model="notification.open"
+      :color="notification.color"
+      vertical
+      right
+      :timeout="2500"
+      top
+    >
+      <h2>{{ notification.title }}</h2>
+      <hr class="mt-2 mb-2" />
+      <span>{{ notification.message }}</span>
+    </v-snackbar>
   </v-card>
 </template>
 
 <script lang="ts">
+import LoginService from "@/services/LoginService";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class NewUser extends Vue {
   valid = false;
-  user = {
+  color = "error";
+  notification = {
+    open: false,
+    color: "error",
+    title: "Usuário criado com sucesso",
+    message: "",
+  };
+  // eslint-disable-next-line no-undef
+  user: Nutricionista.Nutricionista = {
     nome: "",
-    email: "",
-    crn: "",
     cpf: "",
-    celular: "",
+    crn: "",
     senha: "",
+    email: "",
+    celular: "",
   };
 
   get senhaAsterisco(): string {
@@ -137,6 +158,28 @@ export default class NewUser extends Vue {
       if (index <= 1) abreviacao += e.substring(0, 1);
     });
     return abreviacao;
+  }
+
+  save(): void {
+    LoginService.createNewUser(this.user).then(
+      () => {
+        this.notification.color = "success";
+        this.notification.open = true;
+        setTimeout(() => {
+          this.$router.back();
+        }, 1500);
+      },
+      (e) => {
+        console.log(e);
+
+        this.notification = {
+          open: true,
+          color: "error",
+          title: "Erro ao cadastrar nutricionista",
+          message: "Verifique se os dados inseridos estão corretos",
+        };
+      }
+    );
   }
 }
 </script>

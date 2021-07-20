@@ -1,7 +1,11 @@
 <template>
   <v-card class="pa-6 login">
     <v-card-title class="mb-12">
-      <h1 class="title-login">Nutrisier</h1>
+      <v-row align="start">
+        <v-col cols="10">
+          <v-img src="../../assets/logo.jpeg" max-width="300" />
+        </v-col>
+      </v-row>
     </v-card-title>
     <v-card-text>
       <v-row align="center" class="mx-0">
@@ -88,8 +92,5 @@ export default class Login extends Vue {
   width: 30vw;
   height: 90vh;
   box-shadow: 0 0 3em rgba(15, 15, 15, 0.3) !important;
-}
-.title-login {
-  color: rgb(66, 66, 66);
 }
 </style>

@@ -6,7 +6,7 @@
           <v-row justify="center" align="center">
             <v-col cols="auto">
               <v-avatar color="primary" size="200">
-                <span class="white--text text-h1">GN</span>
+                <span class="white--text text-h1">{{ abreviacao }}</span>
               </v-avatar>
             </v-col>
           </v-row>
@@ -127,8 +127,16 @@ export default class NewUser extends Vue {
     senha: "",
   };
 
-  get senhaAsterisco() {
+  get senhaAsterisco(): string {
     return this.user.senha.replace(/\w|\W/g, "*");
+  }
+
+  get abreviacao(): string {
+    let abreviacao = "";
+    this.user.nome.split(" ").map((e, index) => {
+      if (index <= 1) abreviacao += e.substring(0, 1);
+    });
+    return abreviacao;
   }
 }
 </script>

@@ -9,6 +9,7 @@
           label="Email ou CPF"
           class="py-5"
           dense
+          v-model="login.usuario"
           prepend-inner-icon="mdi-account-outline"
         />
       </v-row>
@@ -17,6 +18,8 @@
           label="Senha"
           dense
           class="py-5"
+          type="password"
+          v-model="login.senha"
           prepend-inner-icon="mdi-lock-outline"
         />
       </v-row>
@@ -35,20 +38,46 @@
           </v-btn>
         </v-col>
         <v-col cols="auto">
-          <v-btn depressed color="primary"> Entrar </v-btn>
+          <v-btn depressed color="primary" @click="signIn"> Entrar </v-btn>
         </v-col>
       </v-row>
     </v-card-actions>
+    <v-snackbar
+      v-model="error"
+      color="error"
+      vertical
+      right
+      :timeout="2500"
+      top
+    >
+      <h2>Usuário ou senha incorretos</h2>
+      <hr class="mt-2 mb-2" />
+      <span>Verifique se você digitou os dados corretamente.</span>
+    </v-snackbar>
   </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import LoginService from "@/services/LoginService";
 
 @Component
 export default class Login extends Vue {
+  login: Login.Login = {
+    usuario: "",
+    senha: "",
+  };
+  error = false;
   createNewUser(): void {
     this.$router.push({ name: "NewUser" });
+  }
+  signIn(): void {
+    LoginService.login(this.login).then(
+      (e) => console.log(e),
+      () => {
+        this.error = true;
+      }
+    );
   }
 }
 </script>

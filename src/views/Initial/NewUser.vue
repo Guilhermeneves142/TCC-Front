@@ -48,36 +48,57 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  label="Nome completo"
+                  label="Nome completo *"
                   v-model="user.nome"
+                  :rules="rules.nome"
                   required
                 />
               </v-col>
             </v-row>
             <v-row>
               <v-col>
-                <v-text-field label="CPF" required v-model="user.cpf" />
+                <v-text-field
+                  label="CPF *"
+                  required
+                  v-model="user.cpf"
+                  :rules="rules.cpf"
+                />
               </v-col>
 
               <v-col>
-                <v-text-field label="CRN" v-model="user.crn" />
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                <v-text-field label="Email" required v-model="user.email" />
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                <v-text-field label="Celular" required v-model="user.celular" />
+                <v-text-field
+                  label="CRN *"
+                  v-model="user.crn"
+                  :rules="rules.crn"
+                />
               </v-col>
             </v-row>
             <v-row>
               <v-col>
                 <v-text-field
-                  label="Senha"
+                  label="Email *"
                   required
+                  v-model="user.email"
+                  :rules="rules.email"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  label="Celular *"
+                  required
+                  v-model="user.celular"
+                  :rules="rules.celular"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  label="Senha *"
+                  required
+                  :rules="rules.senha"
                   type="password"
                   v-model="user.senha"
                 />
@@ -85,8 +106,9 @@
 
               <v-col>
                 <v-text-field
-                  label="Confirme sua senha"
+                  label="Confirme sua senha *"
                   type="password"
+                  :rules="rules.confirmarSenha"
                   required
                 />
               </v-col>
@@ -103,7 +125,9 @@
               >
             </v-col>
             <v-col cols="auto">
-              <v-btn color="primary" @click="save">Cadastrar</v-btn>
+              <v-btn color="primary" @click="save" :disabled="!valid"
+                >Cadastrar</v-btn
+              >
             </v-col>
           </v-row>
         </v-card-actions>
@@ -160,18 +184,37 @@ export default class NewUser extends Vue {
     return abreviacao;
   }
 
+  get rules(): unknown {
+    return {
+      nome: [(v: string) => !!v || "Nome obrigatório"],
+      senha: [(v: string) => !!v || "Senha obrigatória"],
+      crn: [(v: string) => !!v || "CRN obrigatória"],
+      cpf: [(v: string) => !!v || "CPF obrigatório"],
+      email: [(v: string) => !!v || "Email obrigatório"],
+      celular: [(v: string) => !!v || "Celular obrigatório"],
+      confirmarSenha: [
+        (v: string) => !!v || "Senha obrigatória",
+        (v: string) => v == this.user.senha || "As senhas devem ser iguais",
+      ],
+    };
+  }
+
   save(): void {
     LoginService.createNewUser(this.user).then(
       () => {
+        this.notification = {
+          open: true,
+          color: "error",
+          title: "Cadastro realizado",
+          message: "O nutricionista foi cadastrado com sucesso",
+        };
         this.notification.color = "success";
         this.notification.open = true;
         setTimeout(() => {
           this.$router.back();
         }, 1500);
       },
-      (e) => {
-        console.log(e);
-
+      () => {
         this.notification = {
           open: true,
           color: "error",

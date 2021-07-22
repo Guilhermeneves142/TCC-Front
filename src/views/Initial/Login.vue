@@ -88,7 +88,9 @@ export default class Login extends Vue {
   signIn(): void {
     if ((this.$refs.form as Vue & { validate: () => boolean }).validate())
       LoginService.login(this.login).then(
-        (e) => localStorage.setItem("token", e.token),
+        (e) => {
+          this.$store.commit("LOGIN", e.token);
+        },
         () => {
           this.error = true;
         }

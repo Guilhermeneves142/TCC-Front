@@ -90,6 +90,7 @@ export default class Login extends Vue {
       LoginService.login(this.login).then(
         (e) => {
           this.$store.commit("LOGIN", e.token);
+          this.$router.push({ name: "Main" });
         },
         () => {
           this.error = true;

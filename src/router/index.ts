@@ -7,12 +7,13 @@ const routes: RouteConfig[] = [
   {
     name: "Initial",
     path: "",
+    redirect: "/login",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Initial/Initial.vue"),
     children: [
       {
         name: "Login",
-        path: "/",
+        path: "/login",
         component: () =>
           import(/* webpackChunkName: "about" */ "../views/Initial/Login.vue"),
       },
@@ -25,6 +26,12 @@ const routes: RouteConfig[] = [
           ),
       },
     ],
+  },
+  {
+    name: "Main",
+    path: "/main",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Main/Main.vue"),
   },
 ];
 

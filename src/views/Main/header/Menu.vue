@@ -5,6 +5,7 @@
     dark
     :mini-variant.sync="mini"
     permanent
+    height="95vh"
   >
     <v-list-item class="px-2">
       <v-list-item-avatar>
@@ -42,9 +43,12 @@ export default class Menu extends Vue {
   drawer = true;
   mini = true;
   items = [
-    { title: "Home", icon: "mdi-home-city" },
-    { title: "My Account", icon: "mdi-account" },
-    { title: "Users", icon: "mdi-account-group-outline" },
+    { title: "Cadastro de doenças", icon: "mdi-emoticon-sick-outline" },
+    { title: "Cadastro de objetivos", icon: "mdi-flag-checkered" },
+    { title: "Cadastro de refeições", icon: "mdi-food-apple-outline" },
+    { title: "Calculadora", icon: "mdi-calculator" },
+    { title: "Meus dados", icon: "mdi-account-outline" },
+    { title: "Sair", icon: "mdi-logout" },
   ];
 
   get nome(): string {

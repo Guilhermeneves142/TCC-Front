@@ -25,6 +25,14 @@ const routes: RouteConfig[] = [
             /* webpackChunkName: "about" */ "../views/Initial/NewUser.vue"
           ),
       },
+      {
+        name: "NewConsultorio",
+        path: "/new-consultorio",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/Initial/SelectConsultorio.vue"
+          ),
+      },
     ],
   },
   {

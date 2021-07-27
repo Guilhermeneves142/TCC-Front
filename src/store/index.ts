@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem("token"),
     nome: "",
+    idNutricionista: 0,
   },
   mutations: {
     LOGIN(state, data) {
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     },
     CLARIFY(state, data) {
       state.nome = data.nome;
+      state.idNutricionista = data.id;
     },
   },
   actions: {},

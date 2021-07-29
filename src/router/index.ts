@@ -1,4 +1,5 @@
 import Vue from "vue";
+import vuex from "@/store/index";
 import VueRouter, { RouteConfig } from "vue-router";
 
 Vue.use(VueRouter);
@@ -14,6 +15,10 @@ const routes: RouteConfig[] = [
       {
         name: "Login",
         path: "/login",
+        beforeEnter: (_to, _from, next) => {
+          vuex.commit("LOGOUT");
+          next();
+        },
         component: () =>
           import(/* webpackChunkName: "about" */ "../views/Initial/Login.vue"),
       },
@@ -40,6 +45,40 @@ const routes: RouteConfig[] = [
     path: "/main",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Main/Main.vue"),
+    children: [
+      {
+        name: "Doencas",
+        path: "/doencas",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/Main/body/Doencas.vue"
+          ),
+      },
+      {
+        name: "Objetivos",
+        path: "/objetivos",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/Main/body/Objetivos.vue"
+          ),
+      },
+      {
+        name: "Refeicoes",
+        path: "/refeicoes",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/Main/body/Refeicoes.vue"
+          ),
+      },
+      {
+        name: "Dados",
+        path: "/dados",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/Main/body/Dados.vue"
+          ),
+      },
+    ],
   },
 ];
 

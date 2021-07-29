@@ -1,7 +1,11 @@
 <template>
-  <v-app-bar color="primary" dense dark>
+  <v-app-bar color="primary" dense dark app>
     <v-toolbar-title
-      ><v-img src="../../../assets/logo.png" height="40" width="150"></v-img
+      ><v-img
+        src="../../../assets/logo-light.png"
+        height="40"
+        width="150"
+      ></v-img
     ></v-toolbar-title>
 
     <v-spacer></v-spacer>

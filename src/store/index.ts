@@ -14,6 +14,14 @@ export default new Vuex.Store({
       localStorage.setItem("token", data);
       state.token = data;
     },
+    LOGOUT(state) {
+      localStorage.clear();
+      state = {
+        token: localStorage.getItem("token"),
+        nome: "",
+        idNutricionista: 0,
+      };
+    },
     CLARIFY(state, data) {
       state.nome = data.nome;
       state.idNutricionista = data.id;

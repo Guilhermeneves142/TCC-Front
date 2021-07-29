@@ -1,7 +1,10 @@
 <template>
   <div>
     <menu-superior />
-    <Menu />
+    <div class="d-flex" style="margin-top: 3em">
+      <Menu style="margin-top: 3em" />
+      <router-view style="margin-left: 3.5em; width: 100vw" />
+    </div>
   </div>
 </template>
 

@@ -3,9 +3,10 @@
     v-model="drawer"
     color="primary"
     dark
+    fixed
     :mini-variant.sync="mini"
     permanent
-    height="95vh"
+    expand-on-hover
   >
     <v-list-item class="px-2">
       <v-list-item-avatar>
@@ -22,7 +23,12 @@
     <v-divider></v-divider>
 
     <v-list dense>
-      <v-list-item v-for="item in items" :key="item.title" link>
+      <v-list-item
+        v-for="item in items"
+        :key="item.title"
+        link
+        @click="go(item.rota)"
+      >
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -43,16 +49,32 @@ export default class Menu extends Vue {
   drawer = true;
   mini = true;
   items = [
-    { title: "Cadastro de doenças", icon: "mdi-emoticon-sick-outline" },
-    { title: "Cadastro de objetivos", icon: "mdi-flag-checkered" },
-    { title: "Cadastro de refeições", icon: "mdi-food-apple-outline" },
-    { title: "Calculadora", icon: "mdi-calculator" },
-    { title: "Meus dados", icon: "mdi-account-outline" },
-    { title: "Sair", icon: "mdi-logout" },
+    {
+      title: "Cadastro de doenças",
+      icon: "mdi-emoticon-sick-outline",
+      rota: "Doencas",
+    },
+    {
+      title: "Cadastro de objetivos",
+      icon: "mdi-flag-checkered",
+      rota: "Objetivos",
+    },
+    {
+      title: "Cadastro de refeições",
+      icon: "mdi-food-apple-outline",
+      rota: "Refeicoes",
+    },
+    { title: "Calculadora", icon: "mdi-calculator", rota: "Calculadora" },
+    { title: "Meus dados", icon: "mdi-account-outline", rota: "Dados" },
+    { title: "Sair", icon: "mdi-logout", rota: "Login" },
   ];
 
   get nome(): string {
     return this.$store.state.nome;
+  }
+
+  go(route: string) {
+    this.$router.push({ name: route });
   }
 }
 </script>

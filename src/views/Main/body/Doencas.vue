@@ -1,22 +1,48 @@
 <template>
-  <div>
+  <v-card flat>
     <v-card-title>
-      Doenças
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Buscar"
-        single-line
-        hide-details
-      ></v-text-field>
+      <v-row class="d-flex justify-space-between ma-4">
+        <div><h3 class="title">Doenças</h3></div>
+        <div class="d-flex" style="width: 40%">
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Buscar"
+            single-line
+            hide-details
+            class="mr-8"
+          ></v-text-field>
+          <v-btn color="primary" dark class="mb-2" height="100%">
+            Cadastrar
+          </v-btn>
+        </div>
+      </v-row>
     </v-card-title>
     <v-data-table
+      :single-expand="singleExpand"
+      :expanded.sync="expanded"
+      show-expand
       :headers="headers"
-      :items="desserts"
+      :items="doencas"
       :search="search"
-    ></v-data-table>
-  </div>
+      no-data-text="Sem items cadastrados"
+      item-key="nome"
+      :footer-props="{
+        itemsPerPageText: 'items por página',
+        itemsPerPageOptions: [4, 5, 6],
+      }"
+    >
+      <template v-slot:expanded-item="{ headers, item }">
+        <td :colspan="headers.length">
+          <h3 class="my-2">Alimentos restritos</h3>
+          <v-divider class="mb-2" />
+          <div v-for="alimento in item.alimentos" class="mb-3" :key="alimento">
+            Nome: {{ alimento }}
+          </div>
+        </td>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -25,99 +51,32 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Doencas extends Vue {
   search = "";
+  expanded = [];
+  singleExpand = false;
   headers = [
     {
-      text: "Dessert (100g serving)",
+      text: "Nome",
       align: "start",
-      sortable: false,
-      value: "name",
+      value: "nome",
     },
-    { text: "Calories", value: "calories" },
-    { text: "Fat (g)", value: "fat" },
-    { text: "Carbs (g)", value: "carbs" },
-    { text: "Protein (g)", value: "protein" },
-    { text: "Iron (%)", value: "iron" },
+    { text: "Definição", value: "definicao" },
+    {
+      text: "Alimentos Restritos",
+      value: "data-table-expand",
+    },
   ];
-  desserts = [
+  doencas = [
     {
-      name: "Frozen Yogurt",
-      calories: 159,
-      fat: 6.0,
-      carbs: 24,
-      protein: 4.0,
-      iron: "1%",
+      nome: "Colesterol",
+      definicao:
+        "O colesterol é um composto gorduroso utilizado para a produção das membranas celulares e de alguns hormônios",
+      alimentos: ["Pão frances"],
     },
     {
-      name: "Ice cream sandwich",
-      calories: 237,
-      fat: 9.0,
-      carbs: 37,
-      protein: 4.3,
-      iron: "1%",
-    },
-    {
-      name: "Eclair",
-      calories: 262,
-      fat: 16.0,
-      carbs: 23,
-      protein: 6.0,
-      iron: "7%",
-    },
-    {
-      name: "Cupcake",
-      calories: 305,
-      fat: 3.7,
-      carbs: 67,
-      protein: 4.3,
-      iron: "8%",
-    },
-    {
-      name: "Gingerbread",
-      calories: 356,
-      fat: 16.0,
-      carbs: 49,
-      protein: 3.9,
-      iron: "16%",
-    },
-    {
-      name: "Jelly bean",
-      calories: 375,
-      fat: 0.0,
-      carbs: 94,
-      protein: 0.0,
-      iron: "0%",
-    },
-    {
-      name: "Lollipop",
-      calories: 392,
-      fat: 0.2,
-      carbs: 98,
-      protein: 0,
-      iron: "2%",
-    },
-    {
-      name: "Honeycomb",
-      calories: 408,
-      fat: 3.2,
-      carbs: 87,
-      protein: 6.5,
-      iron: "45%",
-    },
-    {
-      name: "Donut",
-      calories: 452,
-      fat: 25.0,
-      carbs: 51,
-      protein: 4.9,
-      iron: "22%",
-    },
-    {
-      name: "KitKat",
-      calories: 518,
-      fat: 26.0,
-      carbs: 65,
-      protein: 7,
-      iron: "6%",
+      nome: "Diabetes Tipo 1",
+      definicao:
+        "A insulina não é produzida, a glicose não é transportada para as células e acaba se acumulando no sangue",
+      alimentos: ["Suspiro"],
     },
   ];
 }

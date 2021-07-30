@@ -24,7 +24,7 @@ export default new Vuex.Store({
     },
     CLARIFY(state, data) {
       state.nome = data.nome;
-      state.idNutricionista = data.id;
+      state.idNutricionista = data.idNutricionista;
     },
   },
   actions: {},

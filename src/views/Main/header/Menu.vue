@@ -74,7 +74,7 @@ export default class Menu extends Vue {
   }
 
   go(route: string) {
-    this.$router.push({ name: route });
+    route != "Calculadora" && this.$router.push({ name: route });
   }
 }
 </script>

@@ -10,6 +10,7 @@ declare global {
       senha: string;
       email: string;
       celular: string;
+      consultorio: Consultorio.Consultorio;
     }
   }
 }

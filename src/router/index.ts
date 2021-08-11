@@ -78,6 +78,38 @@ const routes: RouteConfig[] = [
             /* webpackChunkName: "about" */ "../views/Main/body/Dados.vue"
           ),
       },
+      {
+        name: "Atendimento",
+        path: "/atendimento",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/Main/body/Atendimento.vue"
+          ),
+      },
+      {
+        name: "Paciente",
+        path: "/paciente",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/Main/body/Paciente.vue"
+          ),
+      },
+      {
+        name: "Alimento",
+        path: "/alimento",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/Main/body/Alimento.vue"
+          ),
+      },
+      {
+        name: "Agenda",
+        path: "/agenda",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/Main/body/Agenda.vue"
+          ),
+      },
     ],
   },
 ];

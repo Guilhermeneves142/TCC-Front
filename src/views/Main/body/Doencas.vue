@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts">
+import DoencaService from "@/services/DoencaService";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
@@ -65,20 +66,12 @@ export default class Doencas extends Vue {
       value: "data-table-expand",
     },
   ];
-  doencas = [
-    {
-      nome: "Colesterol",
-      definicao:
-        "O colesterol é um composto gorduroso utilizado para a produção das membranas celulares e de alguns hormônios",
-      alimentos: ["Pão frances"],
-    },
-    {
-      nome: "Diabetes Tipo 1",
-      definicao:
-        "A insulina não é produzida, a glicose não é transportada para as células e acaba se acumulando no sangue",
-      alimentos: ["Suspiro"],
-    },
-  ];
+  // eslint-disable-next-line no-undef
+  doencas: Doenca.Doenca[] = [];
+
+  async mounted() {
+    this.doencas = await DoencaService.findAll();
+  }
 }
 </script>
 

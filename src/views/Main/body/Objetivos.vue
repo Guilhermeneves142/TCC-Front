@@ -32,6 +32,7 @@
 </template>
 
 <script lang="ts">
+import ObjectiveService from "@/services/ObjectiveService";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
@@ -45,16 +46,12 @@ export default class Objetivos extends Vue {
     },
     { text: "Descrição", value: "descricao" },
   ];
-  objetivos = [
-    {
-      nome: "Emagrecer",
-      descricao: "Diminuir massa gorda",
-    },
-    {
-      nome: "Engordar",
-      descricao: "Conseguir massa magra",
-    },
-  ];
+  // eslint-disable-next-line no-undef
+  objetivos: Objective.Objective[] = [];
+
+  async mounted() {
+    this.objetivos = await ObjectiveService.findAll();
+  }
 }
 </script>
 

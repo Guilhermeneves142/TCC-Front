@@ -36,6 +36,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import RefeicaoService from "@/services/RefeicaoService";
 
 @Component
 export default class Doencas extends Vue {
@@ -46,20 +47,11 @@ export default class Doencas extends Vue {
       value: "nome",
     },
   ];
-  refeicoes = [
-    {
-      nome: "Café da manha",
-    },
-    {
-      nome: "Almoço",
-    },
-    {
-      nome: "Café da tarde",
-    },
-    {
-      nome: "Jantar",
-    },
-  ];
+  refeicoes: Refeicao.Refeicao[] = [];
+
+  async mounted() {
+    this.refeicoes = await RefeicaoService.findAll();
+  }
 }
 </script>
 

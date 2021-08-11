@@ -170,6 +170,12 @@ export default class NewUser extends Vue {
     senha: "",
     email: "",
     celular: "",
+    consultorio: {
+      id: "",
+      nome: "",
+      telefone: "",
+      endereco: "",
+    },
   };
 
   get senhaAsterisco(): string {

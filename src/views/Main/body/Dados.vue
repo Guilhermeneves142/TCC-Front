@@ -4,7 +4,26 @@
       <v-card-title style="height: 3.5em" class="mb-7">
         <div>Dados</div>
         <v-spacer></v-spacer>
-        <v-btn color="primary" dark class="mb-2" height="100%"> Editar </v-btn>
+        <v-btn
+          color="primary"
+          dark
+          class="mb-2"
+          height="100%"
+          v-if="readonly"
+          @click="readonly = false"
+        >
+          Editar
+        </v-btn>
+        <v-btn
+          color="primary"
+          dark
+          class="mb-2"
+          height="100%"
+          v-else
+          @click="readonly = true"
+        >
+          Voltar
+        </v-btn>
       </v-card-title>
       <v-card-text>
         <v-form v-model="valid">
@@ -17,8 +36,10 @@
                 hide-details
                 id="nome"
                 solo
+                autofocus
+                prepend-icon="mdi-account-outline"
                 flat
-                readonly=""
+                :readonly="readonly"
                 class="mr-8"
               />
             </v-col>
@@ -29,9 +50,10 @@
                 single-line
                 hide-details
                 id="cpf"
+                prepend-icon="mdi-alpha-c-circle-outline"
                 solo
                 flat
-                readonly=""
+                :readonly="readonly"
                 class="mr-8"
               />
             </v-col>
@@ -43,8 +65,9 @@
                 hide-details
                 id="crn"
                 solo
+                prepend-icon="mdi-apple-keyboard-option"
                 flat
-                readonly=""
+                :readonly="readonly"
                 class="mr-8"
               />
             </v-col>
@@ -58,8 +81,9 @@
                 hide-details
                 id="email"
                 solo
+                prepend-icon="mdi-email-outline"
                 flat
-                readonly=""
+                :readonly="readonly"
                 class="mr-8"
               />
             </v-col>
@@ -72,7 +96,9 @@
                 id="celular"
                 solo
                 flat
-                readonly=""
+                prepend-icon="mdi-cellphone"
+                color="primary"
+                :readonly="readonly"
                 class="mr-8"
               />
             </v-col>
@@ -114,16 +140,15 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import NutricionistService from "@/services/NutricionistaService";
+import ConsultorioService from "@/services/ConsultorioService";
 
 @Component
 export default class Dados extends Vue {
   valid = false;
   readonly = true;
-  // eslint-disable-next-line no-undef
   consultorios: Consultorio.Consultorio[] = [];
-  // eslint-disable-next-line no-undef
   nutricionista: Nutricionista.Nutricionista = {
-    nome: "Guilherme Neves Trindade",
+    nome: "",
     cpf: "",
     crn: "",
     senha: "",
@@ -144,6 +169,7 @@ export default class Dados extends Vue {
   }
 
   async mounted() {
+    this.consultorios = await ConsultorioService.findAll();
     this.nutricionista = await NutricionistService.findById(
       this.idNutricionista
     );

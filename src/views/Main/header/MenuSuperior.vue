@@ -9,22 +9,14 @@
     ></v-toolbar-title>
 
     <v-spacer></v-spacer>
-    <section class="d-flex justify-space-between" style="width: 30em">
-      <v-menu left bottom v-for="(item, index) in menu" :key="index">
-        <template v-slot:activator="{ on, attrs }">
-          <div class="d-flex">
-            <v-icon class="mr-2">{{ item.icon }}</v-icon>
-            <span v-bind="attrs" v-on="on">{{ item.text }}</span>
-          </div>
-        </template>
-
-        <v-list>
-          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </section>
+    <v-tabs right>
+      <v-tab v-for="(item, index) in menu" :key="index" @click="go(item.route)">
+        <div class="d-flex">
+          <v-icon class="mr-2">{{ item.icon }}</v-icon>
+          <span>{{ item.text }}</span>
+        </div></v-tab
+      >
+    </v-tabs>
   </v-app-bar>
 </template>
 
@@ -34,11 +26,15 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class MenuSuperior extends Vue {
   menu = [
-    { text: "Atendimento", icon: "mdi-chart-areaspline" },
-    { text: "Paciente", icon: "mdi-account-outline" },
-    { text: "Alimento", icon: "mdi-food-apple-outline" },
-    { text: "Agenda", icon: "mdi-calendar-month" },
+    { text: "Atendimento", icon: "mdi-chart-areaspline", route: "Atendimento" },
+    { text: "Paciente", icon: "mdi-account-outline", route: "Paciente" },
+    { text: "Alimento", icon: "mdi-food-apple-outline", route: "Alimento" },
+    { text: "Agenda", icon: "mdi-calendar-month", route: "Agenda" },
   ];
+
+  go(name: string) {
+    this.$router.push({ name });
+  }
 }
 </script>
 

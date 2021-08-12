@@ -210,12 +210,10 @@ export default class NewUser extends Vue {
       () => {
         this.notification = {
           open: true,
-          color: "error",
+          color: "sucesso",
           title: "Cadastro realizado",
           message: "O nutricionista foi cadastrado com sucesso",
         };
-        this.notification.color = "success";
-        this.notification.open = true;
         setTimeout(() => {
           this.$router.back();
         }, 1500);

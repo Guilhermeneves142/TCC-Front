@@ -12,7 +12,13 @@
             hide-details
             class="mr-8"
           ></v-text-field>
-          <v-btn color="primary" dark class="mb-2" height="100%">
+          <v-btn
+            color="primary"
+            @click="newDoenca"
+            dark
+            class="mb-2"
+            height="100%"
+          >
             Cadastrar
           </v-btn>
         </div>
@@ -42,6 +48,7 @@
         </td>
       </template>
     </v-data-table>
+    <router-view />
   </v-card>
 </template>
 
@@ -71,6 +78,10 @@ export default class Doencas extends Vue {
 
   async mounted() {
     this.doencas = await DoencaService.findAll();
+  }
+
+  newDoenca() {
+    this.$router.push({ name: "NewDoenca" });
   }
 }
 </script>

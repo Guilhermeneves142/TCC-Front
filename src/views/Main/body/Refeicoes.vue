@@ -13,7 +13,13 @@
               hide-details
               class="mr-8"
             ></v-text-field>
-            <v-btn color="primary" dark class="mb-2" height="100%">
+            <v-btn
+              color="primary"
+              dark
+              class="mb-2"
+              @click="open"
+              height="100%"
+            >
               Cadastrar
             </v-btn>
           </div>
@@ -31,6 +37,7 @@
         }"
       ></v-data-table>
     </v-card>
+    <router-view />
   </div>
 </template>
 
@@ -51,6 +58,10 @@ export default class Doencas extends Vue {
 
   async mounted() {
     this.refeicoes = await RefeicaoService.findAll();
+  }
+
+  open() {
+    this.$router.push({ name: "NewRefeicao" });
   }
 }
 </script>

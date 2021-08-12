@@ -12,7 +12,7 @@
             hide-details
             class="mr-8"
           ></v-text-field>
-          <v-btn color="primary" dark class="mb-2" height="100%">
+          <v-btn color="primary" dark class="mb-2" @click="open" height="100%">
             Cadastrar
           </v-btn>
         </div>
@@ -28,6 +28,7 @@
         itemsPerPageOptions: [4, 5, 6],
       }"
     ></v-data-table>
+    <router-view />
   </v-card>
 </template>
 
@@ -51,6 +52,10 @@ export default class Objetivos extends Vue {
 
   async mounted() {
     this.objetivos = await ObjectiveService.findAll();
+  }
+
+  open() {
+    this.$router.push({ name: "NewObjetivo" });
   }
 }
 </script>

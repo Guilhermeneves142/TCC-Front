@@ -93,11 +93,9 @@ export default class SelectConsultorio extends Vue {
   };
   newConsultorio = false;
   valid = false;
-  // eslint-disable-next-line no-undef
   consultorios: Consultorio.Consultorio[] = [];
-  // eslint-disable-next-line no-undef
   consultorio: Consultorio.Consultorio = {
-    id: 0,
+    id: "",
     nome: "",
     telefone: "",
     endereco: "",

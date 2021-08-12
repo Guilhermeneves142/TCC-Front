@@ -48,27 +48,84 @@ const routes: RouteConfig[] = [
     children: [
       {
         name: "Doencas",
-        path: "/doencas",
+        path: "doencas",
         component: () =>
           import(
             /* webpackChunkName: "about" */ "../views/Main/body/Doencas.vue"
           ),
+        children: [
+          {
+            name: "NewDoenca",
+            path: "new",
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "../components/modals/DoencaForm.vue"
+              ),
+          },
+          {
+            name: "EditDoenca",
+            path: ":id",
+            props: true,
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "../components/modals/DoencaForm.vue"
+              ),
+          },
+        ],
       },
       {
         name: "Objetivos",
-        path: "/objetivos",
+        path: "objetivos",
         component: () =>
           import(
             /* webpackChunkName: "about" */ "../views/Main/body/Objetivos.vue"
           ),
+        children: [
+          {
+            name: "NewObjetivo",
+            path: "new",
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "../components/modals/ObjectiveForm.vue"
+              ),
+          },
+          {
+            name: "EditObjetivo",
+            path: ":id",
+            props: true,
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "../components/modals/ObjectiveForm.vue"
+              ),
+          },
+        ],
       },
       {
         name: "Refeicoes",
-        path: "/refeicoes",
+        path: "refeicoes",
         component: () =>
           import(
             /* webpackChunkName: "about" */ "../views/Main/body/Refeicoes.vue"
           ),
+        children: [
+          {
+            name: "NewRefeicao",
+            path: "new",
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "../components/modals/RefeicaoForm.vue"
+              ),
+          },
+          {
+            name: "EditRefeicao",
+            path: ":id",
+            props: true,
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "../components/modals/RefeicaoForm.vue"
+              ),
+          },
+        ],
       },
       {
         name: "Dados",

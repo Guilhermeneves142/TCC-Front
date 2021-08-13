@@ -51,10 +51,10 @@
       </v-form>
     </v-card-text>
 
-    <v-divider v-if="newConsultorio" />
-    <v-card-actions v-if="newConsultorio">
+    <v-divider />
+    <v-card-actions>
       <v-row align="end" justify="end" class="pa-4">
-        <v-col>
+        <v-col v-if="newConsultorio">
           <a @click="newConsultorio = false" class="pb-1">Voltar</a>
         </v-col>
         <v-col cols="auto">
@@ -82,6 +82,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import ConsultorioService from "@/services/ConsultorioService";
+import NutricionistaService from "@/services/NutricionistaService";
 
 @Component
 export default class SelectConsultorio extends Vue {
@@ -92,7 +93,7 @@ export default class SelectConsultorio extends Vue {
     message: "",
   };
   newConsultorio = false;
-  valid = false;
+  valid = true;
   consultorios: Consultorio.Consultorio[] = [];
   consultorio: Consultorio.Consultorio = {
     id: "",
@@ -113,35 +114,62 @@ export default class SelectConsultorio extends Vue {
     };
   }
 
-  get idNutricionista(): number {
+  get idNutricionista(): string {
     return this.$store.state.idNutricionista;
   }
 
   save(): void {
-    ConsultorioService.createNewConsultorio(
-      this.consultorio,
-      this.idNutricionista
-    ).then(
-      () => {
-        this.notification = {
-          open: true,
-          color: "error",
-          title: "Cadastro realizado",
-          message: "O consultorio foi cadastrado com sucesso",
-        };
-        this.notification.color = "success";
-        this.notification.open = true;
-        this.$router.push({ name: "Main" });
-      },
-      () => {
-        this.notification = {
-          open: true,
-          color: "error",
-          title: "Erro ao cadastrar consultorio",
-          message: "Verifique se os dados inseridos estão corretos",
-        };
-      }
-    );
+    if (this.newConsultorio) {
+      ConsultorioService.createNewConsultorio(
+        this.consultorio,
+        this.idNutricionista
+      ).then(
+        () => {
+          this.notification = {
+            open: true,
+            color: "error",
+            title: "Cadastro realizado",
+            message: "O consultorio foi cadastrado com sucesso",
+          };
+          this.notification.color = "success";
+          this.notification.open = true;
+          this.$router.push({ name: "Main" });
+        },
+        () => {
+          this.notification = {
+            open: true,
+            color: "error",
+            title: "Erro ao cadastrar consultorio",
+            message: "Verifique se os dados inseridos estão corretos",
+          };
+        }
+      );
+    } else {
+      NutricionistaService.selectConsultorio(
+        this.idNutricionista,
+        this.consultorio.id
+      ).then(
+        () => {
+          this.notification = {
+            open: true,
+            color: "success",
+            title: "Cadastro realizado",
+            message: "O nutricionista foi inserido no consultorio",
+          };
+          setTimeout(() => {
+            this.$router.push({ name: "Main" });
+          }, 1000);
+        },
+        () => {
+          this.notification = {
+            open: true,
+            color: "error",
+            title: "Erro ao cadastrar",
+            message: "Ocorreu um ao vincular o nutricionista ao consultorio",
+          };
+        }
+      );
+    }
   }
 }
 </script>

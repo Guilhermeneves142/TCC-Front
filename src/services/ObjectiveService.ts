@@ -12,7 +12,7 @@ class ObjectiveService {
   findAll() {
     return new Promise<Objective.Objective[]>((resolve, reject) => {
       http
-        .get(`/objective/findAll`)
+        .get(`/objetivo/findAll`)
         .then((e) => resolve(e.data))
         .catch((e) => reject(e));
     });

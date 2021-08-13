@@ -162,7 +162,6 @@ export default class NewUser extends Vue {
     title: "Usuário criado com sucesso",
     message: "",
   };
-  // eslint-disable-next-line no-undef
   user: Nutricionista.Nutricionista = {
     nome: "",
     cpf: "",
@@ -171,10 +170,7 @@ export default class NewUser extends Vue {
     email: "",
     celular: "",
     consultorio: {
-      id: "",
-      nome: "",
-      telefone: "",
-      endereco: "",
+      id: null,
     },
   };
 
@@ -210,7 +206,7 @@ export default class NewUser extends Vue {
       () => {
         this.notification = {
           open: true,
-          color: "sucesso",
+          color: "success",
           title: "Cadastro realizado",
           message: "O nutricionista foi cadastrado com sucesso",
         };

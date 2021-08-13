@@ -3,7 +3,7 @@ import http from "@/plugins/axios";
 class ConsultorioService {
   createNewConsultorio(
     consultorio: Consultorio.Consultorio,
-    idNutricionista: number
+    idNutricionista: string
   ) {
     const data = {
       consultorio,

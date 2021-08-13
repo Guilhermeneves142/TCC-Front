@@ -22,6 +22,7 @@
       :headers="headers"
       :items="objetivos"
       :search="search"
+      @click:row="open($event.id)"
       no-data-text="Sem items cadastrados"
       :footer-props="{
         itemsPerPageText: 'items por página',
@@ -34,7 +35,7 @@
 
 <script lang="ts">
 import ObjectiveService from "@/services/ObjectiveService";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 
 @Component
 export default class Objetivos extends Vue {
@@ -47,15 +48,20 @@ export default class Objetivos extends Vue {
     },
     { text: "Descrição", value: "descricao" },
   ];
-  // eslint-disable-next-line no-undef
   objetivos: Objective.Objective[] = [];
 
   async mounted() {
     this.objetivos = await ObjectiveService.findAll();
   }
 
-  open() {
-    this.$router.push({ name: "NewObjetivo" });
+  open(id = "") {
+    if (id) this.$router.push({ name: "EditObjetivo", params: { id } });
+    else this.$router.push({ name: "NewObjetivo" });
+  }
+
+  @Watch("$route")
+  async handleRouterChanged() {
+    this.objetivos = await ObjectiveService.findAll();
   }
 }
 </script>

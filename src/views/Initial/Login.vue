@@ -89,7 +89,13 @@ export default class Login extends Vue {
     if ((this.$refs.form as Vue & { validate: () => boolean }).validate())
       LoginService.login(this.login).then(
         (e) => {
+          const clarify = {
+            idNutricionista: e.data.idNutricionista,
+            nome: e.data.nome,
+            consultorio: e.data.consultorio,
+          };
           this.$store.commit("LOGIN", e.token);
+          this.$store.commit("CLARIFY", clarify);
           this.$router.push({
             name: e.hasConsultorio ? "Main" : "NewConsultorio",
           });

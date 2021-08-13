@@ -78,7 +78,6 @@ export default class ObjectiveForm extends Vue {
   loading = false;
   valid = false;
   objetivo: Objective.Objective = {
-    id: null,
     consultorio: {
       id: "",
     },
@@ -114,7 +113,6 @@ export default class ObjectiveForm extends Vue {
   get objectiveToSave() {
     if (this.id == null) {
       return {
-        id: null,
         consultorio: {
           id: this.consultorio,
         },
@@ -131,7 +129,7 @@ export default class ObjectiveForm extends Vue {
         () => {
           this.notification = {
             open: true,
-            color: "sucesso",
+            color: "success",
             title: "Cadastro realizado",
             message: "O objetivo foi cadastrado com sucesso",
           };

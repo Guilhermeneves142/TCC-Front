@@ -29,6 +29,7 @@
         <v-form v-model="valid">
           <v-row>
             <v-col>
+              {{ nutricionista.nome }}
               <v-label for="nome"> Nome </v-label>
               <v-text-field
                 v-model="nutricionista.nome"

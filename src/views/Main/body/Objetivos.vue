@@ -12,7 +12,13 @@
             hide-details
             class="mr-8"
           ></v-text-field>
-          <v-btn color="primary" dark class="mb-2" @click="open" height="100%">
+          <v-btn
+            color="primary"
+            dark
+            class="mb-2"
+            @click="open()"
+            height="100%"
+          >
             Cadastrar
           </v-btn>
         </div>
@@ -54,7 +60,7 @@ export default class Objetivos extends Vue {
     this.objetivos = await ObjectiveService.findAll();
   }
 
-  open(id = "") {
+  open(id: string | null = null) {
     if (id) this.$router.push({ name: "EditObjetivo", params: { id } });
     else this.$router.push({ name: "NewObjetivo" });
   }

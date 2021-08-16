@@ -21,7 +21,7 @@ class LoginService {
   createNewUser(newUser: Nutricionista.Nutricionista) {
     return new Promise<Nutricionista.Nutricionista>((resolve, reject) => {
       http
-        .post("/nutricionista/create", newUser)
+        .post("/nutricionista", newUser)
         .then((e) => resolve(e.data))
         .catch((e) => reject(e));
     });

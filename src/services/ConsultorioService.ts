@@ -11,7 +11,7 @@ class ConsultorioService {
     };
     return new Promise<Consultorio.Consultorio>((resolve, reject) => {
       http
-        .post("/consultorio/create", data)
+        .post("/consultorio", data)
         .then((e) => resolve(e.data))
         .catch((e) => reject(e));
     });

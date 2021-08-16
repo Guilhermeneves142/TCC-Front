@@ -17,11 +17,13 @@ export default new Vuex.Store({
     },
     LOGOUT(state) {
       localStorage.clear();
+      const valueDefault = "";
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       state = {
-        token: localStorage.getItem("token"),
-        nome: "",
-        idNutricionista: "",
-        idConsultorio: "",
+        token: valueDefault,
+        nome: valueDefault,
+        idNutricionista: valueDefault,
+        idConsultorio: valueDefault,
       };
     },
     CLARIFY(state, data) {

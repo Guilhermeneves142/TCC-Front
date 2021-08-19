@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent width="20em">
+    <v-dialog v-model="dialog" persistent width="50em">
       <v-card>
         <v-card-title>
           <span class="text-h5">Doença</span>
@@ -13,7 +13,7 @@
           <v-form v-model="valid">
             <v-container>
               <v-row>
-                <v-col cols="12">
+                <v-col cols="6">
                   <v-text-field
                     label="Nome*"
                     v-model="doenca.nome"
@@ -21,13 +21,30 @@
                     required
                   ></v-text-field>
                 </v-col>
+                <v-col cols="6">
+                  <v-select
+                    label="Alimentos restritos"
+                    no-data-text="Sem dados disponiveis"
+                    v-model="doenca.alimentos"
+                    :items="alimentos"
+                    item-text="nome"
+                    clearable
+                    item-value="id"
+                    multiple
+                    return-object
+                  />
+                </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12">
+                <v-col cols="6">
                   <v-textarea
                     v-model="doenca.descricao"
                     label="Descrição"
                     auto-grow
+                    counter-value
+                    :rules="rules.descricao"
+                    :counter="50"
+                    :max="50"
                   />
                 </v-col>
               </v-row>
@@ -68,6 +85,7 @@
 </template>
 
 <script lang="ts">
+import AlimentoService from "@/services/AlimentoService";
 import DoencaService from "@/services/DoencaService";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
@@ -85,10 +103,12 @@ export default class DoencaForm extends Vue {
       telefone: "",
       endereco: "",
     },
+    alimentos: [],
     nome: "",
     descricao: "",
     default: false,
   };
+  alimentos: { id: string; nome: string }[] = [];
   notification = {
     open: false,
     color: "error",
@@ -97,6 +117,10 @@ export default class DoencaForm extends Vue {
   };
 
   async mounted() {
+    const alimentos = await AlimentoService.findAll();
+    this.alimentos = alimentos.map((e) => {
+      return { id: String(e.id), nome: e.nome };
+    });
     if (this.id) {
       this.loading = true;
       this.doenca = await DoencaService.findById(this.id).finally(
@@ -108,6 +132,7 @@ export default class DoencaForm extends Vue {
   get rules() {
     return {
       nome: [(v: string) => !!v || "Nome é obrigatório"],
+      descricao: [(v: string) => v.length <= 50 || "Máximo de 50 caracteres"],
     };
   }
 
@@ -124,6 +149,7 @@ export default class DoencaForm extends Vue {
         },
         nome: this.doenca.nome,
         descricao: this.doenca.descricao,
+        alimentos: this.doenca.alimentos,
         default: false,
       };
     } else {

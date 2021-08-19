@@ -22,7 +22,7 @@
             prepend-inner-icon="mdi-magnify"
             label="Buscar"
           ></v-text-field>
-          <template v-if="$vuetify.breakpoint.mdAndUp">
+          <template v-if="$vuetify.breakpoint.mdAndUp && !creatingNew">
             <v-spacer></v-spacer>
             <v-select
               v-model="sortBy"
@@ -56,6 +56,37 @@
               </v-btn>
             </v-btn-toggle>
           </template>
+          <v-spacer />
+          <v-btn
+            v-if="!(creatingNew || editingId)"
+            large
+            depressed
+            color="primary"
+            @click="createNew"
+          >
+            Novo
+          </v-btn>
+          <div v-else>
+            <v-btn
+              large
+              depressed
+              color="grey"
+              class="mr-2"
+              @click="voltar"
+              :loading="loading"
+            >
+              Voltar
+            </v-btn>
+            <v-btn
+              large
+              depressed
+              color="success"
+              @click="salvar"
+              :loading="loading"
+            >
+              Salvar
+            </v-btn>
+          </div>
         </v-toolbar>
       </template>
 
@@ -69,9 +100,13 @@
             md="4"
             lg="3"
           >
-            <v-card outlined>
+            <v-card outlined @dblclick="edit(item)">
               <v-card-title class="subheading font-weight-bold">
-                {{ item.nome }}
+                <v-text-field
+                  v-model="item.nome"
+                  v-if="!item.id || item.id === editingId"
+                />
+                <h3 v-else>{{ item.nome }}</h3>
               </v-card-title>
 
               <v-divider></v-divider>
@@ -87,7 +122,13 @@
                     {{ key.name }}:
                   </v-list-item-content>
                   <v-spacer />
+                  <v-text-field
+                    v-if="!item.id || item.id === editingId"
+                    v-model="item[key.key]"
+                    style="max-width: 5em"
+                  />
                   <v-list-item-content
+                    v-else
                     class="align-end"
                     :class="{
                       'blue--text': sortBy === key.key,
@@ -144,6 +185,18 @@
         </v-row>
       </template>
     </v-data-iterator>
+    <v-snackbar
+      v-model="notification.open"
+      :color="notification.color"
+      vertical
+      right
+      :timeout="2500"
+      top
+    >
+      <h2>{{ notification.title }}</h2>
+      <hr class="mt-2 mb-2" />
+      <span>{{ notification.message }}</span>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -160,6 +213,9 @@ export default class Alimento extends Vue {
   page = 1;
   itemsPerPage = 4;
   sortBy = "name";
+  loading = false;
+  creatingNew = false;
+  editingId = "";
   keys = [
     { key: "nome", name: "Nome" },
     { key: "proteina", name: "Proteina" },
@@ -183,6 +239,12 @@ export default class Alimento extends Vue {
     { key: "niacina", name: "Niacina" },
   ];
   alimentos: Alimento.Alimento[] = [];
+  notification = {
+    open: false,
+    color: "error",
+    title: "Usuário criado com sucesso",
+    message: "",
+  };
 
   async mounted() {
     this.alimentos = await AlimentoService.findAll();
@@ -194,6 +256,9 @@ export default class Alimento extends Vue {
   get filteredKeys() {
     return this.keys.filter((key) => key.key !== "nome");
   }
+  get consultorioId() {
+    return this.$store.state.idConsultorio;
+  }
   nextPage() {
     if (this.page + 1 <= this.numberOfPages) this.page += 1;
   }
@@ -202,6 +267,83 @@ export default class Alimento extends Vue {
   }
   updateItemsPerPage(items: number) {
     this.itemsPerPage = items;
+  }
+  createNew() {
+    this.creatingNew = true;
+    const newAlimento: Alimento.Alimento = {
+      nome: "",
+      doencas: [],
+      consultorio: {
+        id: this.consultorioId,
+      },
+      proteina: 0,
+      carboidrato: 0,
+      lipideos: 0,
+      energia: 0,
+      fibraAlimentar: 0,
+      vitaminaC: 0,
+      cinzas: 0,
+      calcio: 0,
+      magnesio: 0,
+      manganes: 0,
+      fosforo: 0,
+      ferro: 0,
+      sodio: 0,
+      potassio: 0,
+      cobre: 0,
+      zinco: 0,
+      tiamina: 0,
+      riboflavina: 0,
+      pirodoxina: 0,
+      niacina: 0,
+      default: false,
+    };
+    this.alimentos = [newAlimento, ...this.alimentos];
+  }
+
+  voltar() {
+    if (this.creatingNew) {
+      this.alimentos.splice(0, 1);
+      this.creatingNew = false;
+    } else this.editingId = "";
+  }
+
+  salvar() {
+    const alimento = this.editingId
+      ? this.alimentos.find((e) => e.id === this.editingId)
+      : this.alimentos[0];
+    if (alimento) {
+      this.loading = true;
+      AlimentoService.save(alimento)
+        .then(
+          (e) => {
+            if (this.creatingNew) this.alimentos[0].id = e.id;
+            this.creatingNew = false;
+            this.editingId = "";
+            this.notification = {
+              open: true,
+              color: "success",
+              title: "Cadastro realizado",
+              message: "Alimento criado com sucesso",
+            };
+          },
+          () => {
+            this.notification = {
+              open: true,
+              color: "error",
+              title: "Erro ao realizar cadastro",
+              message: "Ocorreu um erro ao realizar o cadastro do alimento",
+            };
+          }
+        )
+        .finally(() => {
+          this.loading = false;
+        });
+    }
+  }
+
+  edit(item: Alimento.Alimento) {
+    this.editingId = item.id || "";
   }
 }
 </script>

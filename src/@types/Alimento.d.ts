@@ -3,7 +3,7 @@ export default {};
 declare global {
   namespace Alimento {
     interface Alimento {
-      id: string;
+      id?: string;
       consultorio: Consultorio | null;
       doencas: Doenca[];
       nome: string;

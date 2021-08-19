@@ -9,6 +9,7 @@ declare global {
         | {
             id: string;
           };
+      alimentos: Alimento.Alimento[];
       nome: string;
       descricao: string;
       default: boolean;

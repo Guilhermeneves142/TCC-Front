@@ -31,6 +31,7 @@
       :headers="headers"
       :items="doencas"
       :search="search"
+      no-results-text="Sem resultados para a pesquisa"
       no-data-text="Sem items cadastrados"
       item-key="nome"
       :footer-props="{
@@ -43,7 +44,7 @@
           <h3 class="my-2">Alimentos restritos</h3>
           <v-divider class="mb-2" />
           <div v-for="alimento in item.alimentos" class="mb-3" :key="alimento">
-            Nome: {{ alimento }}
+            Nome: {{ alimento.nome }}
           </div>
         </td>
       </template>
@@ -67,7 +68,7 @@ export default class Doencas extends Vue {
       align: "start",
       value: "nome",
     },
-    { text: "Definição", value: "definicao" },
+    { text: "Descrição", value: "descricao" },
     {
       text: "Alimentos Restritos",
       value: "data-table-expand",

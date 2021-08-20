@@ -3,7 +3,7 @@ export default {};
 declare global {
   namespace Doenca {
     interface Doenca {
-      id: string | number | null;
+      id?: string;
       consultorio:
         | Consultorio.Consultorio
         | {

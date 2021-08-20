@@ -43,8 +43,8 @@
                     auto-grow
                     counter-value
                     :rules="rules.descricao"
-                    :counter="50"
-                    :max="50"
+                    :counter="150"
+                    :max="150"
                   />
                 </v-col>
               </v-row>
@@ -96,7 +96,6 @@ export default class DoencaForm extends Vue {
   loading = false;
   valid = false;
   doenca: Doenca.Doenca = {
-    id: null,
     consultorio: {
       id: "",
       nome: "",
@@ -132,7 +131,7 @@ export default class DoencaForm extends Vue {
   get rules() {
     return {
       nome: [(v: string) => !!v || "Nome é obrigatório"],
-      descricao: [(v: string) => v.length <= 50 || "Máximo de 50 caracteres"],
+      descricao: [(v: string) => v.length <= 150 || "Máximo de 50 caracteres"],
     };
   }
 
@@ -143,7 +142,6 @@ export default class DoencaForm extends Vue {
   get doencaToSave() {
     if (this.id == null) {
       return {
-        id: null,
         consultorio: {
           id: this.consultorio,
         },
@@ -164,7 +162,7 @@ export default class DoencaForm extends Vue {
         () => {
           this.notification = {
             open: true,
-            color: "sucesso",
+            color: "success",
             title: "Cadastro realizado",
             message: "O doença foi cadastrado com sucesso",
           };

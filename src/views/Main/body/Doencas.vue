@@ -31,7 +31,7 @@
       :headers="headers"
       :items="doencas"
       :search="search"
-      no-results-text="Sem resultados para a pesquisa"
+      :no-results-text="`Não foram encontrados itens relacionados a: ${search}`"
       no-data-text="Sem items cadastrados"
       item-key="nome"
       :footer-props="{

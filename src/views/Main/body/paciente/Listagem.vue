@@ -12,7 +12,16 @@
               single-line
               hide-details
               class="mr-8"
-            ></v-text-field>
+            />
+            <v-btn
+              color="primary"
+              @click="newPaciente"
+              dark
+              class="mb-2"
+              height="100%"
+            >
+              Cadastrar
+            </v-btn>
           </div>
         </v-row>
       </v-card-title>
@@ -103,6 +112,9 @@ export default class Listagem extends Vue {
   }
   formerPage() {
     if (this.page - 1 >= 1) this.page -= 1;
+  }
+  newPaciente() {
+    this.$router.push({ name: "NewPaciente" });
   }
 }
 </script>

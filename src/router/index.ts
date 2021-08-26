@@ -10,7 +10,7 @@ const routes: RouteConfig[] = [
     path: "",
     redirect: "/login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Initial/Initial.vue"),
+      import(/* webpackChunkName: "about" */ "@/views/Initial/Initial.vue"),
     children: [
       {
         name: "Login",
@@ -20,22 +20,20 @@ const routes: RouteConfig[] = [
           next();
         },
         component: () =>
-          import(/* webpackChunkName: "about" */ "../views/Initial/Login.vue"),
+          import(/* webpackChunkName: "about" */ "@/views/Initial/Login.vue"),
       },
       {
         name: "NewUser",
         path: "/new-user",
         component: () =>
-          import(
-            /* webpackChunkName: "about" */ "../views/Initial/NewUser.vue"
-          ),
+          import(/* webpackChunkName: "about" */ "@/views/Initial/NewUser.vue"),
       },
       {
         name: "NewConsultorio",
         path: "/new-consultorio",
         component: () =>
           import(
-            /* webpackChunkName: "about" */ "../views/Initial/SelectConsultorio.vue"
+            /* webpackChunkName: "about" */ "@/views/Initial/SelectConsultorio.vue"
           ),
       },
     ],
@@ -44,14 +42,14 @@ const routes: RouteConfig[] = [
     name: "Main",
     path: "/main",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Main/Main.vue"),
+      import(/* webpackChunkName: "about" */ "@/views/Main/Main.vue"),
     children: [
       {
         name: "Doencas",
         path: "doencas",
         component: () =>
           import(
-            /* webpackChunkName: "about" */ "../views/Main/body/Doencas.vue"
+            /* webpackChunkName: "about" */ "@/views/Main/body/Doencas.vue"
           ),
         children: [
           {
@@ -59,7 +57,7 @@ const routes: RouteConfig[] = [
             path: "new",
             component: () =>
               import(
-                /* webpackChunkName: "about" */ "../components/modals/DoencaForm.vue"
+                /* webpackChunkName: "about" */ "@/components/modals/Doenca/DoencaForm.vue"
               ),
           },
           {
@@ -68,7 +66,7 @@ const routes: RouteConfig[] = [
             props: true,
             component: () =>
               import(
-                /* webpackChunkName: "about" */ "../components/modals/DoencaForm.vue"
+                /* webpackChunkName: "about" */ "@/components/modals/Doenca/DoencaForm.vue"
               ),
           },
         ],
@@ -78,7 +76,7 @@ const routes: RouteConfig[] = [
         path: "objetivos",
         component: () =>
           import(
-            /* webpackChunkName: "about" */ "../views/Main/body/Objetivos.vue"
+            /* webpackChunkName: "about" */ "@/views/Main/body/Objetivos.vue"
           ),
         children: [
           {
@@ -86,7 +84,7 @@ const routes: RouteConfig[] = [
             path: "new",
             component: () =>
               import(
-                /* webpackChunkName: "about" */ "../components/modals/ObjectiveForm.vue"
+                /* webpackChunkName: "about" */ "@/components/modals/Objective/ObjectiveForm.vue"
               ),
           },
           {
@@ -95,7 +93,7 @@ const routes: RouteConfig[] = [
             props: true,
             component: () =>
               import(
-                /* webpackChunkName: "about" */ "../components/modals/ObjectiveForm.vue"
+                /* webpackChunkName: "about" */ "@/components/modals/Objective/ObjectiveForm.vue"
               ),
           },
         ],
@@ -105,7 +103,7 @@ const routes: RouteConfig[] = [
         path: "refeicoes",
         component: () =>
           import(
-            /* webpackChunkName: "about" */ "../views/Main/body/Refeicoes.vue"
+            /* webpackChunkName: "about" */ "@/views/Main/body/Refeicoes.vue"
           ),
         children: [
           {
@@ -113,7 +111,7 @@ const routes: RouteConfig[] = [
             path: "new",
             component: () =>
               import(
-                /* webpackChunkName: "about" */ "../components/modals/RefeicaoForm.vue"
+                /* webpackChunkName: "about" */ "@/components/modals/Refeicao/RefeicaoForm.vue"
               ),
           },
           {
@@ -122,7 +120,7 @@ const routes: RouteConfig[] = [
             props: true,
             component: () =>
               import(
-                /* webpackChunkName: "about" */ "../components/modals/RefeicaoForm.vue"
+                /* webpackChunkName: "about" */ "@/components/modals/Refeicao/RefeicaoForm.vue"
               ),
           },
         ],
@@ -131,16 +129,14 @@ const routes: RouteConfig[] = [
         name: "Dados",
         path: "/dados",
         component: () =>
-          import(
-            /* webpackChunkName: "about" */ "../views/Main/body/Dados.vue"
-          ),
+          import(/* webpackChunkName: "about" */ "@/views/Main/body/Dados.vue"),
       },
       {
         name: "Atendimento",
         path: "/atendimento",
         component: () =>
           import(
-            /* webpackChunkName: "about" */ "../views/Main/body/Atendimento.vue"
+            /* webpackChunkName: "about" */ "@/views/Main/body/Atendimento.vue"
           ),
       },
       {
@@ -148,15 +144,25 @@ const routes: RouteConfig[] = [
         path: "/paciente",
         component: () =>
           import(
-            /* webpackChunkName: "about" */ "../views/Main/body/Paciente.vue"
+            /* webpackChunkName: "about" */ "@/views/Main/body/Paciente.vue"
           ),
+        children: [
+          {
+            name: "NewPaciente",
+            path: "new",
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "@/components/modals/Paciente/PacienteForm.vue"
+              ),
+          },
+        ],
       },
       {
         name: "Alimento",
         path: "/alimento",
         component: () =>
           import(
-            /* webpackChunkName: "about" */ "../views/Main/body/Alimento.vue"
+            /* webpackChunkName: "about" */ "@/views/Main/body/Alimento.vue"
           ),
       },
       {
@@ -164,7 +170,7 @@ const routes: RouteConfig[] = [
         path: "/agenda",
         component: () =>
           import(
-            /* webpackChunkName: "about" */ "../views/Main/body/Agenda.vue"
+            /* webpackChunkName: "about" */ "@/views/Main/body/Agenda.vue"
           ),
       },
     ],

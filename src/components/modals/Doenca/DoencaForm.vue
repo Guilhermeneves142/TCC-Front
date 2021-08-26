@@ -41,7 +41,6 @@
                     v-model="doenca.descricao"
                     label="Descrição"
                     auto-grow
-                    counter-value
                     :rules="rules.descricao"
                     :counter="150"
                     :max="150"

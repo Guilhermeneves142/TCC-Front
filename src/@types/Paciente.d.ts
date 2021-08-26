@@ -4,9 +4,9 @@ declare global {
   namespace Paciente {
     interface Paciente {
       id?: string;
-      consultorio: Consultorio.Consultorio;
-      responsavel: Responsavel.Responsavel | null;
-      antropometrico: Antropometrico.Antropometrico | null;
+      consultorio: Consultorio.Consultorio | { id: string };
+      responsavel?: Responsavel.Responsavel;
+      antropometrico?: Antropometrico.Antropometrico;
       objetivos: Objective.Objective[];
       nome: string;
       email: string;

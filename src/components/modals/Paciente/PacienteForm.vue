@@ -111,6 +111,7 @@
             </v-container>
           </v-form>
           <small>*Campos obrigatórios</small>
+
           <responsavel-form />
         </v-card-text>
         <v-card-actions>

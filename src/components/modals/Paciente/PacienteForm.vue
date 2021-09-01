@@ -106,13 +106,23 @@
                     return-object
                   />
                 </v-col>
+                <v-col>
+                  <v-btn
+                    elevation="0"
+                    color="primary"
+                    class="mt-3"
+                    @click="createResponsavel = Number(!createResponsavel)"
+                  >
+                    Cadastrar Responsavel
+                  </v-btn>
+                </v-col>
               </v-row>
-              <v-row> </v-row>
+              <v-row>
+                <responsavel-form v-model="createResponsavel" />
+              </v-row>
             </v-container>
           </v-form>
           <small>*Campos obrigatórios</small>
-
-          <responsavel-form />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -162,6 +172,7 @@ export default class PacienteForm extends Vue {
   loading = false;
   data = false;
   valid = false;
+  createResponsavel = 1;
   notification = {
     open: false,
     color: "error",

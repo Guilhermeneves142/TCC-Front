@@ -17,6 +17,9 @@ class PacienteService {
         .catch((e) => reject(e));
     });
   }
+  save(paciente: Paciente.Paciente, responsavel?: Responsavel.Responsavel) {
+    console.log("salvo");
+  }
 }
 
 export default new PacienteService();

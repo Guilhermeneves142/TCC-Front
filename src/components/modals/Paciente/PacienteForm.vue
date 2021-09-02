@@ -109,16 +109,24 @@
                 <v-col>
                   <v-btn
                     elevation="0"
-                    color="primary"
+                    :color="createResponsavel ? 'primary' : 'success'"
                     class="mt-3"
                     @click="createResponsavel = Number(!createResponsavel)"
                   >
-                    Cadastrar Responsavel
+                    <v-icon v-if="!createResponsavel">mdi-content-save</v-icon>
+                    {{
+                      createResponsavel
+                        ? "Cadastrar Responsavel"
+                        : "Salvar Responsavel"
+                    }}
                   </v-btn>
                 </v-col>
               </v-row>
               <v-row>
-                <responsavel-form v-model="createResponsavel" />
+                <responsavel-form
+                  v-model="createResponsavel"
+                  @responsavel="responsavel = $event"
+                />
               </v-row>
             </v-container>
           </v-form>
@@ -161,6 +169,7 @@ import { Component, Vue } from "vue-property-decorator";
 import ResponsavelForm from "./ResponsavelForm.vue";
 import ObjectiveService from "@/services/ObjectiveService";
 import Moment from "moment";
+import PacienteService from "@/services/PacienteService";
 
 @Component({
   components: {
@@ -191,6 +200,15 @@ export default class PacienteForm extends Vue {
     dataNascimento: "",
     genero: "",
   };
+  responsavel: Responsavel.Responsavel = {
+    consultorio: { id: "" },
+    nome: "",
+    cpf: "",
+    email: "",
+    telefone: "",
+    celular: "",
+    endereco: "",
+  };
   objetivos: Objective.Objective[] = [];
 
   async created() {
@@ -218,7 +236,7 @@ export default class PacienteForm extends Vue {
   }
 
   save() {
-    console.log("salvo");
+    PacienteService.save(this.paciente, this.responsavel);
   }
 }
 </script>

@@ -10,7 +10,11 @@
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item in items" :key="item">
         <v-card flat>
-          <component :is="component" />
+          <component
+            :is="component"
+            @alterComponent="alterTab($event)"
+            :id="id"
+          />
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -24,12 +28,18 @@ import Listagem from "./paciente/Listagem.vue";
 
 @Component
 export default class Paciente extends Vue {
-  tab = null;
+  tab = 1;
+  id = "";
   items = ["Dados", "Listagem"];
 
   get component() {
     if (this.tab == 0) return Dados;
     else return Listagem;
+  }
+
+  alterTab(id = "") {
+    this.tab = this.tab ? 0 : 1;
+    this.id = id;
   }
 }
 </script>

@@ -29,6 +29,7 @@
         dense
         no-data-text="Sem items cadastrados"
         :no-results-text="`Não foram encontrados itens relacionados a: ${search}`"
+        @click:row="open($event.id)"
         :items="pacientes"
         :headers="headers"
         :search="search"
@@ -83,7 +84,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import PacienteService from "@/services/PacienteService";
 
 @Component
@@ -115,6 +116,14 @@ export default class Listagem extends Vue {
   }
   newPaciente() {
     this.$router.push({ name: "NewPaciente" });
+  }
+  open(id: string) {
+    this.$emit("alterComponent", id);
+  }
+
+  @Watch("$route")
+  async handleRouterChanged() {
+    this.pacientes = await PacienteService.findAll();
   }
 }
 </script>

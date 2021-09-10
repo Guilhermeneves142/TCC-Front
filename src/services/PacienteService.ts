@@ -18,7 +18,12 @@ class PacienteService {
     });
   }
   save(paciente: Paciente.Paciente, responsavel?: Responsavel.Responsavel) {
-    console.log("salvo");
+    return new Promise<Paciente.Paciente[]>((resolve, reject) => {
+      http
+        .post(`/paciente/create`, { paciente, responsavel })
+        .then((e) => resolve(e.data))
+        .catch((e) => reject(e));
+    });
   }
 }
 

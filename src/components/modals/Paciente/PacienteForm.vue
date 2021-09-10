@@ -211,6 +211,28 @@ export default class PacienteForm extends Vue {
   };
   objetivos: Objective.Objective[] = [];
 
+  get pacienteForSave() {
+    const paciente = this.paciente;
+    paciente.consultorio.id = this.consultorio;
+    return paciente;
+  }
+
+  get responsavelForSave() {
+    const responsavel = this.responsavel;
+    responsavel.consultorio.id = this.consultorio;
+    return responsavel;
+  }
+
+  get consultorio() {
+    return this.$store.state.idConsultorio;
+  }
+
+  get rules() {
+    return {
+      nome: [(v: string) => !!v || "Nome é obrigatório"],
+    };
+  }
+
   async created() {
     this.paciente.dataNascimento =
       Moment.utc(969159600000).format("YYYY-MM-DD");
@@ -218,12 +240,6 @@ export default class PacienteForm extends Vue {
 
   async mounted() {
     this.objetivos = await ObjectiveService.findAll();
-  }
-
-  get rules() {
-    return {
-      nome: [(v: string) => !!v || "Nome é obrigatório"],
-    };
   }
 
   formatDateToString(data: string) {
@@ -236,7 +252,30 @@ export default class PacienteForm extends Vue {
   }
 
   save() {
-    PacienteService.save(this.paciente, this.responsavel);
+    PacienteService.save(
+      this.pacienteForSave,
+      this.responsavelForSave.nome ? this.responsavelForSave : undefined
+    ).then(
+      () => {
+        this.notification = {
+          open: true,
+          color: "success",
+          title: "Cadastro realizado",
+          message: "O Paciente foi cadastrado com sucesso",
+        };
+        setTimeout(() => {
+          this.close();
+        }, 1000);
+      },
+      () => {
+        this.notification = {
+          open: true,
+          color: "error",
+          title: "Erro ao realizar cadastro",
+          message: "Ocorreu um erro ao realizar o cadastro do paciente",
+        };
+      }
+    );
   }
 }
 </script>

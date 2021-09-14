@@ -23,7 +23,7 @@
                 </v-col>
                 <v-col cols="4">
                   <v-text-field
-                    label="Email *"
+                    label="Email "
                     v-model="paciente.email"
                     color="primary"
                     :rules="rules.email"

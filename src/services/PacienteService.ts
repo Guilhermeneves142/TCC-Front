@@ -1,7 +1,7 @@
 import http from "@/plugins/axios";
 
 class PacienteService {
-  findById(id: number) {
+  findById(id: string) {
     return new Promise<Paciente.Paciente>((resolve, reject) => {
       http
         .get(`/paciente/findById/${id}`)

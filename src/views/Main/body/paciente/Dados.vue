@@ -3,9 +3,9 @@
     <v-col cols="12" sm="8">
       <v-card>
         <v-card-title class="primary">
-          <span class="text-h5 white--text">Sarah Mcbeal</span>
+          <span class="text-h5 white--text">{{ data.nome }}</span>
           <v-spacer />
-          <span class="white--text">28 anos</span>
+          <span class="white--text">{{ idade }} anos</span>
         </v-card-title>
 
         <v-list>
@@ -15,12 +15,12 @@
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-list-item-title>(650) 555-1234</v-list-item-title>
+              <v-list-item-title>{{ data.telefone }}</v-list-item-title>
             </v-list-item-content>
             <v-spacer />
 
             <v-list-item-content>
-              <v-list-item-title>(323) 555-6789</v-list-item-title>
+              <v-list-item-title>{{ data.celular }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -32,12 +32,12 @@
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-list-item-title>mcbeal@example.com</v-list-item-title>
+              <v-list-item-title>{{ data.email }}</v-list-item-title>
             </v-list-item-content>
 
             <v-spacer />
             <v-list-item-content>
-              <v-list-item-title>Masculino</v-list-item-title>
+              <v-list-item-title>{{ data.sexo }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -70,11 +70,32 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import PacienteService from "@/services/PacienteService";
+import moment from "moment";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 @Component
 export default class Dados extends Vue {
   @Prop() id!: string;
+  data: Paciente.Paciente = {
+    consultorio: { id: "" },
+    objetivos: [],
+    nome: "",
+    email: "",
+    telefone: "",
+    celular: "",
+    dataNascimento: "",
+    genero: "",
+    id: "",
+  };
+
+  get idade() {
+    return moment().year() - moment(this.data.dataNascimento).year();
+  }
+
+  async mounted() {
+    this.data = await PacienteService.findById(this.id);
+  }
 }
 </script>
 

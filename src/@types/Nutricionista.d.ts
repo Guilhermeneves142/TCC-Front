@@ -10,6 +10,8 @@ declare global {
       senha: string;
       email: string;
       celular: string;
+      inicioExpediente: string;
+      fimExpediente: string;
       consultorio:
         | Consultorio.Consultorio
         | {

@@ -67,7 +67,7 @@
 
               <v-col>
                 <v-text-field
-                  label="CRN *"
+                  label="CRN"
                   v-model="user.crn"
                   :rules="rules.crn"
                 />
@@ -82,8 +82,6 @@
                   :rules="rules.email"
                 />
               </v-col>
-            </v-row>
-            <v-row>
               <v-col>
                 <v-text-field
                   label="Celular *"
@@ -110,6 +108,27 @@
                   type="password"
                   :rules="rules.confirmarSenha"
                   required
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  label="Início do Expediente *"
+                  required
+                  type="time"
+                  v-model="user.inicioExpediente"
+                  :max="user.fimExpediente"
+                />
+              </v-col>
+
+              <v-col>
+                <v-text-field
+                  label="Fim do Expediente *"
+                  required
+                  type="time"
+                  v-model="user.fimExpediente"
+                  :min="user.inicioExpediente"
                 />
               </v-col>
             </v-row>
@@ -169,6 +188,8 @@ export default class NewUser extends Vue {
     senha: "",
     email: "",
     celular: "",
+    inicioExpediente: "08:00",
+    fimExpediente: "18:00",
     consultorio: {
       id: null,
     },
@@ -190,7 +211,6 @@ export default class NewUser extends Vue {
     return {
       nome: [(v: string) => !!v || "Nome obrigatório"],
       senha: [(v: string) => !!v || "Senha obrigatória"],
-      crn: [(v: string) => !!v || "CRN obrigatória"],
       cpf: [(v: string) => !!v || "CPF obrigatório"],
       email: [(v: string) => !!v || "Email obrigatório"],
       celular: [(v: string) => !!v || "Celular obrigatório"],

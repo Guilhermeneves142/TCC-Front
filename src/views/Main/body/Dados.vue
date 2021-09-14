@@ -156,6 +156,8 @@ export default class Dados extends Vue {
     email: "",
     celular: "",
     id: "",
+    inicioExpediente: "08:00",
+    fimExpediente: "18:00",
     consultorio: {
       id: "",
       nome: "",

@@ -29,7 +29,7 @@ export default new Vuex.Store({
     CLARIFY(state, data) {
       state.nome = data.nome;
       state.idNutricionista = data.idNutricionista;
-      state.idConsultorio = data.consultorio.id ?? "";
+      state.idConsultorio = data.consultorio?.id ?? "";
     },
   },
   actions: {},

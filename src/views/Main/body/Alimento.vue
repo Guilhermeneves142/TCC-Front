@@ -72,6 +72,7 @@
               depressed
               color="grey"
               class="mr-2"
+              dark
               @click="voltar"
               :loading="loading"
             >

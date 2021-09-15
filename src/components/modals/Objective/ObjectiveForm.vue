@@ -26,7 +26,8 @@
                 <v-col cols="12">
                   <v-textarea
                     v-model="objetivo.descricao"
-                    label="Descrição"
+                    label="Descrição*"
+                    :rules="rules.descricao"
                     auto-grow
                   />
                 </v-col>
@@ -103,6 +104,7 @@ export default class ObjectiveForm extends Vue {
   get rules() {
     return {
       nome: [(v: string) => !!v || "Nome é obrigatório"],
+      descricao: [(v: string) => !!v || "Descricao é obrigatória"],
     };
   }
 

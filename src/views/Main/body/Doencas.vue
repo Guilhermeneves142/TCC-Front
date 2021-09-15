@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import DoencaService from "@/services/DoencaService";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 
 @Component
 export default class Doencas extends Vue {
@@ -83,6 +83,11 @@ export default class Doencas extends Vue {
 
   newDoenca() {
     this.$router.push({ name: "NewDoenca" });
+  }
+
+  @Watch("$route")
+  async handleRouteChanged() {
+    this.doencas = await DoencaService.findAll();
   }
 }
 </script>

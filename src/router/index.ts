@@ -155,6 +155,15 @@ const routes: RouteConfig[] = [
                 /* webpackChunkName: "about" */ "@/components/modals/Paciente/PacienteForm.vue"
               ),
           },
+          {
+            name: "EditPaciente",
+            path: ":id",
+            props: true,
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "@/components/modals/Paciente/PacienteForm.vue"
+              ),
+          },
         ],
       },
       {

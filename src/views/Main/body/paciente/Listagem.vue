@@ -79,7 +79,6 @@
         </template>
       </v-data-table>
     </v-card>
-    <router-view />
   </div>
 </template>
 

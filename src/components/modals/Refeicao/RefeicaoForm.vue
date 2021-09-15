@@ -69,7 +69,6 @@ export default class ObjectiveForm extends Vue {
   loading = false;
   valid = false;
   refeicao: Refeicao.Refeicao = {
-    id: null,
     consultorio: {
       id: "",
     },
@@ -103,16 +102,13 @@ export default class ObjectiveForm extends Vue {
   }
 
   get refeicaoToSave() {
-    if (this.id == null) {
-      return {
-        id: null,
-        consultorio: {
-          id: this.consultorio,
-        },
-        nome: this.refeicao.nome,
-        default: false,
-      };
-    } else return this.refeicao;
+    return {
+      consultorio: {
+        id: this.consultorio,
+      },
+      nome: this.refeicao.nome,
+      default: false,
+    };
   }
 
   save() {
@@ -122,7 +118,7 @@ export default class ObjectiveForm extends Vue {
         () => {
           this.notification = {
             open: true,
-            color: "sucesso",
+            color: "success",
             title: "Cadastro realizado",
             message: "A refeição foi cadastrada com sucesso",
           };

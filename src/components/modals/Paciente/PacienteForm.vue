@@ -99,7 +99,7 @@
                     label="Responsavel"
                     no-data-text="Sem dados disponiveis"
                     v-model="paciente.responsavel"
-                    :items="objetivos"
+                    :items="responsaveis"
                     item-text="nome"
                     clearable
                     item-value="id"
@@ -165,9 +165,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import ResponsavelForm from "./ResponsavelForm.vue";
 import ObjectiveService from "@/services/ObjectiveService";
+import ResponsavelService from "@/services/ResponsavelService";
 import Moment from "moment";
 import PacienteService from "@/services/PacienteService";
 
@@ -177,6 +178,7 @@ import PacienteService from "@/services/PacienteService";
   },
 })
 export default class PacienteForm extends Vue {
+  @Prop() id!: string;
   dialog = true;
   loading = false;
   data = false;
@@ -209,11 +211,13 @@ export default class PacienteForm extends Vue {
     celular: "",
     endereco: "",
   };
+  responsaveis: Responsavel.Responsavel[] = [];
   objetivos: Objective.Objective[] = [];
 
   get pacienteForSave() {
     const paciente = this.paciente;
     paciente.consultorio.id = this.consultorio;
+    paciente.dataNascimento = String(paciente.dataNascimento).substring(0, 10);
     return paciente;
   }
 
@@ -240,6 +244,10 @@ export default class PacienteForm extends Vue {
 
   async mounted() {
     this.objetivos = await ObjectiveService.findAll();
+    this.responsaveis = await ResponsavelService.findAll();
+    if (this.id) {
+      this.paciente = await PacienteService.findById(this.id);
+    }
   }
 
   formatDateToString(data: string) {

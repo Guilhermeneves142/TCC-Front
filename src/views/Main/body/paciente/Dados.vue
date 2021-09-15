@@ -5,7 +5,12 @@
         <v-card-title class="primary">
           <span class="text-h5 white--text">{{ data.nome }}</span>
           <v-spacer />
-          <span class="white--text">{{ idade }} anos</span>
+          <div>
+            <span class="white--text">{{ idade }} anos</span>
+            <v-btn icon color="white" class="ml-4" @click="editPaciente">
+              <v-icon>mdi-pencil-outline</v-icon>
+            </v-btn>
+          </div>
         </v-card-title>
 
         <v-list>
@@ -18,7 +23,9 @@
               <v-list-item-title>{{ data.telefone }}</v-list-item-title>
             </v-list-item-content>
             <v-spacer />
-
+            <v-list-item-action>
+              <v-icon>mdi-phone</v-icon>
+            </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>{{ data.celular }}</v-list-item-title>
             </v-list-item-content>
@@ -36,8 +43,11 @@
             </v-list-item-content>
 
             <v-spacer />
+            <v-list-item-action>
+              <v-icon>mdi-account-outline</v-icon>
+            </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>{{ data.sexo }}</v-list-item-title>
+              <v-list-item-title>{{ data.genero }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -49,16 +59,12 @@
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-select
-                no-data-text="Sem dados disponiveis"
-                item-text="nome"
-                clearable
-                item-value="id"
-                multiple
-                solo
-                flat
-                readonly
-              />
+              <v-list-item-action-text
+                v-for="(objetivo, index) in data.objetivos"
+                :key="index"
+              >
+                {{ index + 1 + " - " + objetivo.nome }}
+              </v-list-item-action-text>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -94,6 +100,15 @@ export default class Dados extends Vue {
   }
 
   async mounted() {
+    this.data = await PacienteService.findById(this.id);
+  }
+
+  editPaciente() {
+    this.$router.push({ name: "EditPaciente", params: { id: this.id } });
+  }
+
+  @Watch("$route")
+  async handleRouterChanged() {
     this.data = await PacienteService.findById(this.id);
   }
 }

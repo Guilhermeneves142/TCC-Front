@@ -3,7 +3,7 @@
     <v-tabs v-model="tab" align-with-title>
       <v-tabs-slider color="grey"></v-tabs-slider>
 
-      <v-tab v-for="item in items" :key="item">
+      <v-tab v-for="item in items" :key="item" :disabled="!id">
         {{ item }}
       </v-tab>
     </v-tabs>
@@ -18,6 +18,7 @@
         </v-card>
       </v-tab-item>
     </v-tabs-items>
+    <router-view />
   </v-card>
 </template>
 

@@ -3,7 +3,7 @@ export default {};
 declare global {
   namespace Refeicao {
     interface Refeicao {
-      id: string | null;
+      id?: string;
       consultorio:
         | Consultorio.Consultorio
         | {

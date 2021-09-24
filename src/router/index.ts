@@ -182,6 +182,24 @@ const routes: RouteConfig[] = [
             /* webpackChunkName: "about" */ "@/views/Main/body/Agenda.vue"
           ),
       },
+      {
+        name: "PlanoAlimentar",
+        path: "/plano-alimentar",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "@/views/Main/body/PlanoAlimentar.vue"
+          ),
+        children: [
+          {
+            name: "NewPlanoAlimentar",
+            path: "new",
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "@/components/modals/PlanoAlimentar/PlanoAlimentarForm.vue"
+              ),
+          },
+        ],
+      },
     ],
   },
 ];

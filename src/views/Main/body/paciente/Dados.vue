@@ -7,7 +7,7 @@
           <v-spacer />
           <div>
             <span class="white--text">{{ idade }} anos</span>
-            <v-btn icon color="white" class="ml-4" @click="editPaciente">
+            <v-btn icon color="white" class="ml-8" @click="editPaciente">
               <v-icon>mdi-pencil-outline</v-icon>
             </v-btn>
           </div>
@@ -26,7 +26,7 @@
             <v-list-item-action>
               <v-icon>mdi-phone</v-icon>
             </v-list-item-action>
-            <v-list-item-content>
+            <v-list-item-content class="ml-8">
               <v-list-item-title>{{ data.celular }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -46,7 +46,7 @@
             <v-list-item-action>
               <v-icon>mdi-account-outline</v-icon>
             </v-list-item-action>
-            <v-list-item-content>
+            <v-list-item-content class="ml-8">
               <v-list-item-title>{{ data.genero }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -64,6 +64,20 @@
                 :key="index"
               >
                 {{ index + 1 + " - " + objetivo.nome }}
+              </v-list-item-action-text>
+            </v-list-item-content>
+
+            <v-spacer />
+            <v-list-item-action>
+              <v-icon>mdi-emoticon-sick-outline</v-icon>
+            </v-list-item-action>
+
+            <v-list-item-content class="ml-8">
+              <v-list-item-action-text
+                v-for="(doenca, index) in data.doencas"
+                :key="index"
+              >
+                {{ index + 1 + " - " + doenca.nome }}
               </v-list-item-action-text>
             </v-list-item-content>
           </v-list-item>
@@ -93,6 +107,7 @@ export default class Dados extends Vue {
     dataNascimento: "",
     genero: "",
     id: "",
+    doencas: [],
   };
 
   get idade() {

@@ -29,12 +29,25 @@
                     :rules="rules.email"
                   />
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="2">
                   <v-select
                     label="Objetivos"
                     no-data-text="Sem dados disponiveis"
                     v-model="paciente.objetivos"
                     :items="objetivos"
+                    item-text="nome"
+                    clearable
+                    item-value="id"
+                    multiple
+                    return-object
+                  />
+                </v-col>
+                <v-col cols="2">
+                  <v-select
+                    label="Doenças"
+                    no-data-text="Sem dados disponiveis"
+                    v-model="paciente.doencas"
+                    :items="doencas"
                     item-text="nome"
                     clearable
                     item-value="id"
@@ -171,6 +184,7 @@ import ObjectiveService from "@/services/ObjectiveService";
 import ResponsavelService from "@/services/ResponsavelService";
 import Moment from "moment";
 import PacienteService from "@/services/PacienteService";
+import DoencaService from "@/services/DoencaService";
 
 @Component({
   components: {
@@ -201,6 +215,7 @@ export default class PacienteForm extends Vue {
     celular: "",
     dataNascimento: "",
     genero: "",
+    doencas: [],
   };
   responsavel: Responsavel.Responsavel = {
     consultorio: { id: "" },
@@ -213,6 +228,7 @@ export default class PacienteForm extends Vue {
   };
   responsaveis: Responsavel.Responsavel[] = [];
   objetivos: Objective.Objective[] = [];
+  doencas: Doenca.Doenca[] = [];
 
   get pacienteForSave() {
     const paciente = this.paciente;
@@ -244,6 +260,7 @@ export default class PacienteForm extends Vue {
 
   async mounted() {
     this.objetivos = await ObjectiveService.findAll();
+    this.doencas = await DoencaService.findAll();
     this.responsaveis = await ResponsavelService.findAll();
     if (this.id) {
       this.paciente = await PacienteService.findById(this.id);

@@ -14,6 +14,7 @@ declare global {
       celular: string;
       dataNascimento: string | number;
       genero: string;
+      doencas: Doenca.Doenca[];
     }
   }
 }

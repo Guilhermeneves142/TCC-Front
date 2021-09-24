@@ -19,7 +19,7 @@
                     v-model="doenca.nome"
                     :rules="rules.nome"
                     required
-                  ></v-text-field>
+                  />
                 </v-col>
                 <v-col cols="6">
                   <v-select

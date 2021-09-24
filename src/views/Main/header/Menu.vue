@@ -60,6 +60,11 @@ export default class Menu extends Vue {
       rota: "Objetivos",
     },
     {
+      title: "Cadastro de Plano Alimentar",
+      icon: "mdi-chart-areaspline",
+      rota: "PlanoAlimentar",
+    },
+    {
       title: "Cadastro de refeições",
       icon: "mdi-food-apple-outline",
       rota: "Refeicoes",

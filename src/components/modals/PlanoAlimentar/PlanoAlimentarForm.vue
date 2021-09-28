@@ -144,6 +144,8 @@ export default class PlanoAlimentarForm extends Vue {
   };
 
   async mounted() {
+    if (this.id)
+      this.planoAlimentar = await PlanoAlimentarService.findById(this.id);
     this.refeicoes = await RefeicaoService.findAll();
     this.alimentos = await AlimentoService.findAll();
     this.planoAlimentar.consultorio.id = this.consultorio;
@@ -179,6 +181,7 @@ export default class PlanoAlimentarForm extends Vue {
         title: "Cadastro realizado",
         message: "O plano alimentar foi cadastrado com sucesso",
       };
+      this.close();
     } catch (error) {
       this.notification = {
         open: true,
@@ -196,9 +199,6 @@ export default class PlanoAlimentarForm extends Vue {
       refeicao: { id: "" },
       horario: "",
       alimentos: [],
-      planoAlimentar: {
-        id: "",
-      },
     };
     this.planoAlimentar.refeicoes.push(newItem);
   }

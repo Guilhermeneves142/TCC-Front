@@ -2,7 +2,7 @@ import http from "@/plugins/axios";
 
 class PlanoAlimentarService {
   findAll() {
-    return new Promise<Refeicao.Refeicao[]>((resolve, reject) => {
+    return new Promise<PlanoAlimentar.PlanoAlimentar[]>((resolve, reject) => {
       http
         .get(`/planoAlimentar/findAll`)
         .then((e) => resolve(e.data))
@@ -18,7 +18,7 @@ class PlanoAlimentarService {
     });
   }
   findById(id: string) {
-    return new Promise<Refeicao.Refeicao>((resolve, reject) => {
+    return new Promise<PlanoAlimentar.PlanoAlimentar>((resolve, reject) => {
       http
         .get(`/planoAlimentar/${id}`)
         .then((e) => resolve(e.data))

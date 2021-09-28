@@ -198,6 +198,15 @@ const routes: RouteConfig[] = [
                 /* webpackChunkName: "about" */ "@/components/modals/PlanoAlimentar/PlanoAlimentarForm.vue"
               ),
           },
+          {
+            name: "EditPlanoAlimentar",
+            path: ":id",
+            props: true,
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "@/components/modals/PlanoAlimentar/PlanoAlimentarForm.vue"
+              ),
+          },
         ],
       },
     ],

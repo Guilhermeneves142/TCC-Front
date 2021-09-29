@@ -17,7 +17,7 @@
               color="primary"
               dark
               class="mb-2"
-              @click="open"
+              @click="open()"
               height="100%"
             >
               Cadastrar

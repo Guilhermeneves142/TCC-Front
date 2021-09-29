@@ -103,8 +103,6 @@
                 class="mr-8"
               />
             </v-col>
-          </v-row>
-          <v-row>
             <v-col>
               <v-label for="consultorio"> Consultorio </v-label>
               <v-text-field

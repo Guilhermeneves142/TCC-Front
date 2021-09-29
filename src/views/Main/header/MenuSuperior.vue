@@ -14,8 +14,8 @@
         <div class="d-flex">
           <v-icon class="mr-2">{{ item.icon }}</v-icon>
           <span>{{ item.text }}</span>
-        </div></v-tab
-      >
+        </div>
+      </v-tab>
     </v-tabs>
   </v-app-bar>
 </template>
@@ -26,10 +26,26 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class MenuSuperior extends Vue {
   menu = [
-    { text: "Atendimento", icon: "mdi-chart-areaspline", route: "Atendimento" },
-    { text: "Paciente", icon: "mdi-account-outline", route: "Paciente" },
-    { text: "Alimento", icon: "mdi-food-apple-outline", route: "Alimento" },
-    { text: "Agenda", icon: "mdi-calendar-month", route: "Agenda" },
+    {
+      text: "Atendimento",
+      icon: "mdi-chart-areaspline",
+      route: "Atendimento",
+    },
+    {
+      text: "Paciente",
+      icon: "mdi-account-outline",
+      route: "Paciente",
+    },
+    {
+      text: "Alimento",
+      icon: "mdi-food-apple-outline",
+      route: "Alimento",
+    },
+    {
+      text: "Agenda",
+      icon: "mdi-calendar-month",
+      route: "Agenda",
+    },
   ];
 
   go(name: string) {

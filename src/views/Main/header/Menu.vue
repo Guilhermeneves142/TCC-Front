@@ -9,9 +9,7 @@
     expand-on-hover
   >
     <v-list-item class="px-2">
-      <v-list-item-avatar>
-        <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
-      </v-list-item-avatar>
+      <v-list-item-avatar class="avatar">{{ iniciais }} </v-list-item-avatar>
 
       <v-list-item-title>{{ nome }}</v-list-item-title>
 
@@ -78,10 +76,24 @@ export default class Menu extends Vue {
     return this.$store.state.nome;
   }
 
+  get iniciais() {
+    return this.nome
+      .split(" ")
+      .map((e) => e.charAt(0))
+      .join()
+      .replace(/,/g, "");
+  }
+
   go(route: string) {
     route != "Calculadora" && this.$router.push({ name: route });
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.avatar {
+  border: 1px solid rgb(59, 252, 0);
+  border-radius: 5em;
+  background-color: rgba(223, 231, 235, 0.2);
+}
+</style>

@@ -18,7 +18,7 @@ class PacienteService {
     });
   }
   save(paciente: Paciente.Paciente, responsavel?: Responsavel.Responsavel) {
-    return new Promise<Paciente.Paciente[]>((resolve, reject) => {
+    return new Promise<Paciente.Paciente>((resolve, reject) => {
       http
         .post(`/paciente/create`, { paciente, responsavel })
         .then((e) => resolve(e.data))

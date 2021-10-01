@@ -281,13 +281,15 @@ export default class PacienteForm extends Vue {
       this.pacienteForSave,
       this.responsavelForSave.nome ? this.responsavelForSave : undefined
     ).then(
-      () => {
+      (e) => {
         this.notification = {
           open: true,
           color: "success",
           title: "Cadastro realizado",
           message: "O Paciente foi cadastrado com sucesso",
         };
+        if (this.$store.state.creatingNewPaciente)
+          this.$store.commit("CONSULT", e);
         setTimeout(() => {
           this.close();
         }, 1000);

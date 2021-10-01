@@ -9,11 +9,19 @@ export default new Vuex.Store({
     nome: "",
     idNutricionista: "",
     idConsultorio: "",
+    idPaciente: "",
+    creatingNewPaciente: false,
   },
   mutations: {
     LOGIN(state, data) {
       localStorage.setItem("token", data);
       state.token = data;
+    },
+    CONSULT(state, data) {
+      state.idPaciente = data.id;
+    },
+    CREATING_NEW_PACIENTE(state, data) {
+      state.creatingNewPaciente = data;
     },
     LOGOUT(state) {
       localStorage.clear();
@@ -24,6 +32,8 @@ export default new Vuex.Store({
         nome: valueDefault,
         idNutricionista: valueDefault,
         idConsultorio: valueDefault,
+        idPaciente: valueDefault,
+        creatingNewPaciente: false,
       };
     },
     CLARIFY(state, data) {

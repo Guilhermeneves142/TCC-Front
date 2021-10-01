@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col>
-          <v-tabs v-model="tab" align-with-title>
+          <v-tabs v-model="tab" align-with-title v-if="id">
             <v-tabs-slider color="grey"></v-tabs-slider>
 
             <v-tab v-for="(item, index) in items" :key="index">
@@ -15,21 +15,29 @@
           <v-select
             label="Paciente"
             no-data-text="Sem dados disponiveis"
-            v-model="paciente"
+            v-model="id"
             :items="pacientes"
             item-text="nome"
             clearable
             item-value="id"
-            multiple
           />
+        </v-col>
+        <v-col cols="3" class="mt-3" v-if="!id">
+          <v-btn color="primary" dark class="mb-2" @click="newPaciente()">
+            Novo paciente
+          </v-btn>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
-          <v-tabs-items v-model="tab">
+          <v-tabs-items v-model="tab" v-if="id">
             <v-tab-item v-for="item in items" :key="item">
               <v-card flat>
-                <component :is="component" @alterComponent="alterTab($event)" />
+                <component
+                  :is="component"
+                  @alterComponent="alterTab($event)"
+                  :id="id"
+                />
               </v-card>
             </v-tab-item> </v-tabs-items
         ></v-col>
@@ -40,15 +48,15 @@
 
 <script lang="ts">
 import PacienteService from "@/services/PacienteService";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import AtendimentoTab from "./Atendimento/Atendimento.vue";
 import HistoricoTab from "./Atendimento/Historico.vue";
 
 @Component
 export default class Atendimento extends Vue {
-  paciente = "";
   pacientes: Paciente.Paciente[] = [];
   tab = 0;
+  id = "";
   items = ["Atendimento", "Historico"];
 
   get component() {
@@ -60,8 +68,22 @@ export default class Atendimento extends Vue {
     this.pacientes = await PacienteService.findAll();
   }
 
-  alterTab(id = "") {
+  alterTab() {
     this.tab = this.tab ? 0 : 1;
+  }
+
+  newPaciente() {
+    this.$store.commit("CREATING_NEW_PACIENTE", true);
+    this.$router.push({ name: "NewPaciente" });
+  }
+
+  get idPaciente() {
+    return this.$store.state.idPaciente;
+  }
+
+  @Watch("idPaciente", { immediate: true })
+  handlePacienteCreatedChanged() {
+    this.id = this.idPaciente;
   }
 }
 </script>

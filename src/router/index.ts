@@ -138,6 +138,24 @@ const routes: RouteConfig[] = [
           import(
             /* webpackChunkName: "about" */ "@/views/Main/body/Atendimento.vue"
           ),
+        children: [
+          {
+            name: "NewObjetivoAtendimento",
+            path: "newObjetivo",
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "@/components/modals/Objective/ObjectiveForm.vue"
+              ),
+          },
+          {
+            name: "NewPlanoAlimentarAtendimento",
+            path: "newPlanoAlimentar",
+            component: () =>
+              import(
+                /* webpackChunkName: "about" */ "@/components/modals/PlanoAlimentar/PlanoAlimentarForm.vue"
+              ),
+          },
+        ],
       },
       {
         name: "Paciente",

@@ -22,17 +22,20 @@
                   />
                 </v-col>
                 <v-col cols="6">
-                  <v-select
+                  <v-autocomplete
                     label="Alimentos restritos"
                     no-data-text="Sem dados disponiveis"
                     v-model="doenca.alimentos"
+                    flat
                     :items="alimentos"
                     item-text="nome"
                     clearable
                     item-value="id"
                     multiple
                     return-object
-                  />
+                  >
+                    <template v-slot:selection> </template>
+                  </v-autocomplete>
                 </v-col>
               </v-row>
               <v-row>
@@ -45,6 +48,14 @@
                     :counter="150"
                     :max="150"
                   />
+                </v-col>
+                <v-col cols="6">
+                  <v-list-item-action-text
+                    v-for="(alimento, indexAlimentos) in doenca.alimentos"
+                    :key="indexAlimentos"
+                  >
+                    {{ `${indexAlimentos + 1} - ${alimento.nome}, ` }}<br />
+                  </v-list-item-action-text>
                 </v-col>
               </v-row>
             </v-container>

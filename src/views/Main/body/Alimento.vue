@@ -271,6 +271,8 @@ export default class Alimento extends Vue {
   }
   createNew() {
     this.creatingNew = true;
+    this.page = 1;
+    this.search = "";
     const newAlimento: Alimento.Alimento = {
       nome: "",
       doencas: [],

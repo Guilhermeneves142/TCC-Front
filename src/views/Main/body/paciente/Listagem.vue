@@ -92,7 +92,6 @@ export default class Listagem extends Vue {
 
   itemsPerPageArray = [4, 8, 12];
   page = 1;
-  numberOfPages = 1;
   itemsPerPage = 4;
   headers = [
     { text: "Nome", value: "nome", sort: false },
@@ -102,6 +101,10 @@ export default class Listagem extends Vue {
 
   async mounted() {
     this.pacientes = await PacienteService.findAll();
+  }
+
+  get numberOfPages() {
+    return Math.ceil(this.pacientes.length / this.itemsPerPage);
   }
 
   updateItemsPerPage(items: number) {

@@ -33,6 +33,7 @@
           label="Patrica de exercícios"
           :items="exerciceFrequency"
           hide-details
+          v-model="praticaExercicios"
           dense
         />
       </v-col>
@@ -117,11 +118,12 @@
 <script lang="ts">
 import AlimentoService from "@/services/AlimentoService";
 import moment from "moment";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 
 @Component
 export default class Anamneses extends Vue {
   alimentos: Alimento.Alimento[] = [];
+  praticaExercicios = "";
 
   async mounted() {
     this.alimentos = await AlimentoService.findAll();
@@ -140,6 +142,11 @@ export default class Anamneses extends Vue {
   }
   get mastigacao() {
     return ["Rapida", "Normal", "Lenta"];
+  }
+
+  @Watch("praticaExercicios")
+  handlePraticaExerciciosChanged() {
+    this.$store.commit("EXERCICIOS", this.praticaExercicios);
   }
 }
 </script>

@@ -31,6 +31,7 @@
       <v-row>
         <v-col cols="4">
           <v-label> GEB: </v-label>
+          <span>{{ GEB.toFixed(2) }}</span>
         </v-col>
         <v-col cols="5" class="d-flex align-center">
           <v-label> Objetivos: </v-label>
@@ -69,6 +70,7 @@
       <v-row>
         <v-col>
           <v-label> GET: </v-label>
+          <span>{{ GET.toFixed(2) }}</span>
         </v-col>
         <v-col cols="3">
           <v-btn
@@ -132,7 +134,7 @@
         </v-row>
       </v-card-title>
       <v-card-text>
-        <Antropometrico />
+        <Antropometrico :id="id" />
       </v-card-text>
     </div>
     <router-view />
@@ -146,6 +148,8 @@ import PlanoAlimentarService from "@/services/PlanoAlimentarService";
 import Anamneses from "./Anamneses.vue";
 import Antropometrico from "./Antropometrico.vue";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import calcs from "@/utils/calcs";
+import moment from "moment";
 
 @Component({
   components: {
@@ -173,6 +177,7 @@ export default class Atendimento extends Vue {
     anamneses: false,
     antropometrico: false,
   };
+  loading = false;
   objetivos: Objective.Objective[] = [];
   planoAlimentares: PlanoAlimentar.PlanoAlimentar[] = [];
 
@@ -201,6 +206,41 @@ export default class Atendimento extends Vue {
   @Watch("$route")
   handleRouterChanged() {
     this.findDataList();
+  }
+
+  get GEB() {
+    return calcs.GEB(this.paciente.genero, this.idade, this.peso, this.altura);
+  }
+
+  get GET() {
+    return calcs.GET(
+      this.paciente.genero,
+      this.idade,
+      this.peso,
+      this.altura,
+      this.praticaExercicios
+    );
+  }
+
+  get peso() {
+    return this.$store.state.peso;
+  }
+
+  get altura() {
+    return this.$store.state.altura;
+  }
+
+  get praticaExercicios() {
+    return this.$store.state.praticaExercicios;
+  }
+
+  get idade() {
+    return Number(
+      moment(this.paciente.dataNascimento)
+        .locale("pt-br")
+        .fromNow()
+        .replace(/\D/g, "")
+    );
   }
 }
 </script>

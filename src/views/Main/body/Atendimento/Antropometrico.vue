@@ -5,7 +5,7 @@
         <v-text-field
           label="Altura"
           type="number"
-          v-model="altura"
+          v-model="value.altura"
           suffix="cm"
           dense
         />
@@ -14,7 +14,7 @@
         <v-text-field
           label="Peso"
           type="number"
-          v-model="peso"
+          v-model="value.peso"
           suffix="kg"
           dense
         />
@@ -37,42 +37,111 @@
     <v-card-text>
       <v-row>
         <v-col cols="3">
-          <v-text-field label="Ombro" type="number" suffix="cm" dense />
-          <v-text-field label="Peitoral" type="number" suffix="cm" dense />
-          <v-text-field label="Cintura" type="number" suffix="cm" dense />
-        </v-col>
-        <v-col cols="3">
-          <v-text-field label="Abdômen" type="number" suffix="cm" dense />
-          <v-text-field label="Quadril" type="number" suffix="cm" dense />
-          <v-text-field label="Pescoço" type="number" suffix="cm" dense />
+          <v-text-field
+            v-model="value.ombroCircunferencia"
+            label="Ombro"
+            type="number"
+            suffix="cm"
+            dense
+          />
+          <v-text-field
+            v-model="value.peitoralCircunferencia"
+            label="Peitoral"
+            type="number"
+            suffix="cm"
+            dense
+          />
+          <v-text-field
+            v-model="value.cinturaCircunferencia"
+            label="Cintura"
+            type="number"
+            suffix="cm"
+            dense
+          />
         </v-col>
         <v-col cols="3">
           <v-text-field
+            v-model="value.abdomenCircunferencia"
+            label="Abdômen"
+            type="number"
+            suffix="cm"
+            dense
+          />
+          <v-text-field
+            v-model="value.quadrilCircunferencia"
+            label="Quadril"
+            type="number"
+            suffix="cm"
+            dense
+          />
+          <v-text-field
+            v-model="value.pescocoCircunferencia"
+            label="Pescoço"
+            type="number"
+            suffix="cm"
+            dense
+          />
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            v-model="value.panturrilhaDireitaCircunferencia"
             label="Panturrilha direita"
             type="number"
             suffix="cm"
             dense
           />
           <v-text-field
+            v-model="value.panturrilhaEsquerdaCircunferencia"
             label="Panturrilha esquerda"
             type="number"
             suffix="cm"
             dense
           />
 
-          <v-text-field label="Coxa direita" type="number" suffix="cm" dense />
-          <v-text-field label="Coxa esquerda" type="number" suffix="cm" dense />
+          <v-text-field
+            v-model="value.coxaDireitaCircunferencia"
+            label="Coxa direita"
+            type="number"
+            suffix="cm"
+            dense
+          />
+          <v-text-field
+            v-model="value.coxaEsquerdaCircunferencia"
+            label="Coxa esquerda"
+            type="number"
+            suffix="cm"
+            dense
+          />
         </v-col>
         <v-col cols="3">
-          <v-text-field label="Braço direito" type="number" suffix="cm" dense />
           <v-text-field
+            v-model="value.bracoDireitoCircunferencia"
+            label="Braço direito"
+            type="number"
+            suffix="cm"
+            dense
+          />
+          <v-text-field
+            v-model="value.bracoEsquerdoCircunferencia"
             label="Braço esquerdo"
             type="number"
             suffix="cm"
             dense
           />
-          <v-text-field label="Punho" type="number" suffix="cm" dense />
-          <v-text-field label="Antebraço" type="number" suffix="cm" dense />
+          <v-text-field
+            v-model="value.punhoCircunferencia"
+            label="Punho"
+            type="number"
+            suffix="cm"
+            dense
+          />
+          <v-text-field
+            v-model="value.antrebraco"
+            label="Antebraço"
+            type="number"
+            suffix="cm"
+            dense
+          />
         </v-col>
       </v-row>
     </v-card-text>
@@ -98,23 +167,41 @@
         <v-col cols="3" class="d-flex flex-column justify-space-between">
           <v-text-field
             label="Massa gorda"
-            v-model="massaGorda"
+            v-model="value.massaGorda"
             type="number"
             suffix="%"
             dense
           />
           <v-text-field
             label="Massa magra"
-            v-model="massaMagra"
+            v-model="value.massaMagra"
             type="number"
             suffix="%"
             dense
           />
         </v-col>
         <v-col cols="3">
-          <v-text-field label="Peso residual" type="number" suffix="kg" dense />
-          <v-text-field label="Peso ósseo" type="number" suffix="kg" dense />
-          <v-text-field label="Peso muscular" type="number" suffix="kg" dense />
+          <v-text-field
+            v-model="value.pesoResidual"
+            label="Peso residual"
+            type="number"
+            suffix="kg"
+            dense
+          />
+          <v-text-field
+            v-model="value.pesoOsseo"
+            label="Peso ósseo"
+            type="number"
+            suffix="kg"
+            dense
+          />
+          <v-text-field
+            v-model="value.pesoMuscula"
+            label="Peso muscular"
+            type="number"
+            suffix="kg"
+            dense
+          />
         </v-col>
       </v-row>
     </v-card-text>
@@ -122,7 +209,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Model, Prop, Vue, Watch } from "vue-property-decorator";
 import moment from "moment";
 import calcs from "@/utils/calcs";
 import PacienteService from "@/services/PacienteService";
@@ -130,6 +217,7 @@ import PacienteService from "@/services/PacienteService";
 @Component
 export default class Antropometrico extends Vue {
   @Prop() id!: string;
+  @Model() value!: Atendimento.Antropometrico;
   paciente: Paciente.Paciente = {
     consultorio: { id: "" },
     objetivos: [],
@@ -142,12 +230,9 @@ export default class Antropometrico extends Vue {
     id: "",
     doencas: [],
   };
-  peso = 0;
-  altura = 0;
-  massaGorda = 0;
-  massaMagra = 0;
 
   async mounted() {
+    this.value.data = this.dataAtual;
     this.paciente = await PacienteService.findById(this.id);
   }
 
@@ -167,15 +252,15 @@ export default class Antropometrico extends Vue {
   }
 
   get IMC() {
-    return calcs.IMC(this.peso, this.altura);
+    return calcs.IMC(this.value.peso, this.value.altura);
   }
 
   get massaGordaKg() {
-    return calcs.massaKG(this.peso, this.massaGorda);
+    return calcs.massaKG(this.value.peso, this.value.massaGorda);
   }
 
   get massaMagraKg() {
-    return calcs.massaKG(this.peso, this.massaMagra);
+    return calcs.massaKG(this.value.peso, this.value.massaMagra);
   }
 
   get IMCDefinition() {
@@ -213,12 +298,12 @@ export default class Antropometrico extends Vue {
 
   @Watch("altura")
   handleAlturaChanged() {
-    this.$store.commit("ALTURA", this.altura / 100);
+    this.$store.commit("ALTURA", this.value.altura / 100);
   }
 
   @Watch("peso")
   handlePesoChanged() {
-    this.$store.commit("PESO", this.peso);
+    this.$store.commit("PESO", this.value.peso);
   }
 }
 </script>

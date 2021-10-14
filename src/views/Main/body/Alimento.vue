@@ -43,8 +43,9 @@
                 depressed
                 :color="sortDesc ? 'grey' : 'primary'"
                 :value="false"
+                dark
               >
-                <v-icon>mdi-arrow-up</v-icon>
+                <v-icon color="white">mdi-arrow-up</v-icon>
               </v-btn>
               <v-btn
                 large
@@ -52,7 +53,7 @@
                 :color="sortDesc ? 'primary' : 'grey'"
                 :value="true"
               >
-                <v-icon>mdi-arrow-down</v-icon>
+                <v-icon color="white">mdi-arrow-down</v-icon>
               </v-btn>
             </v-btn-toggle>
           </template>

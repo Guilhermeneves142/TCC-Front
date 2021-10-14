@@ -11,7 +11,7 @@
           <v-label> Plano Alimentar: </v-label>
           <v-autocomplete
             no-data-text="Sem dados disponiveis"
-            v-model="paciente.planoAlimentar"
+            v-model="atendimento.planoAlimentar.id"
             :items="planoAlimentares"
             item-text="nome"
             class="mx-8"
@@ -25,6 +25,18 @@
             @click="createData('NewPlanoAlimentarAtendimento')"
           >
             <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn
+            color="success"
+            dark
+            class="mb-2 mr-5"
+            @click="save()"
+            width="100%"
+            height="100%"
+          >
+            Salvar
           </v-btn>
         </v-col>
       </v-row>
@@ -55,11 +67,11 @@
           </v-btn>
         </v-col>
 
-        <v-col cols="3">
+        <v-col cols="3" @click="creating.anamneses = true">
           <v-btn
             depressed
+            width="100%"
             color="primary"
-            @click="creating.anamneses = true"
             v-if="!creating.anamneses"
           >
             <v-icon>mdi-plus</v-icon>
@@ -72,12 +84,12 @@
           <v-label> GET: </v-label>
           <span>{{ GET.toFixed(2) }}</span>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="3" v-if="!creating.antropometrico">
           <v-btn
             depressed
             color="primary"
+            width="100%"
             @click="creating.antropometrico = true"
-            v-if="!creating.antropometrico"
           >
             <v-icon>mdi-plus</v-icon>
             Antropométrico
@@ -90,15 +102,6 @@
         <v-row class="d-flex justify-space-between ma-4">
           <div><h4 class="title-caption">Anamneses</h4></div>
           <div class="d-flex">
-            <v-btn
-              color="success"
-              dark
-              class="mb-2 mr-5"
-              @click="saveAnamneses()"
-              height="100%"
-            >
-              Salvar
-            </v-btn>
             <v-btn icon :disabled="loading" @click="creating.anamneses = false">
               <v-icon>mdi-close</v-icon>
             </v-btn>
@@ -106,7 +109,7 @@
         </v-row>
       </v-card-title>
       <v-card-text>
-        <Anamneses />
+        <Anamneses v-model="atendimento.anamneses" />
       </v-card-text>
     </div>
     <div class="head my-3" v-if="creating.antropometrico">
@@ -114,15 +117,6 @@
         <v-row class="d-flex justify-space-between ma-4">
           <div><h4 class="title-caption">Antropométrico</h4></div>
           <div class="d-flex">
-            <v-btn
-              color="success"
-              dark
-              class="mb-2 mr-5"
-              @click="saveAntropometrico()"
-              height="100%"
-            >
-              Salvar
-            </v-btn>
             <v-btn
               icon
               :disabled="loading"
@@ -134,14 +128,27 @@
         </v-row>
       </v-card-title>
       <v-card-text>
-        <Antropometrico :id="id" />
+        <Antropometrico :id="id" v-model="atendimento.antropometrico" />
       </v-card-text>
     </div>
     <router-view />
+    <v-snackbar
+      v-model="notification.open"
+      :color="notification.color"
+      vertical
+      right
+      :timeout="2500"
+      top
+    >
+      <h2>{{ notification.title }}</h2>
+      <hr class="mt-2 mb-2" />
+      <span>{{ notification.message }}</span>
+    </v-snackbar>
   </div>
 </template>
 
 <script lang="ts">
+import AtendimentoService from "@/services/AtendimentoService";
 import ObjectiveService from "@/services/ObjectiveService";
 import PacienteService from "@/services/PacienteService";
 import PlanoAlimentarService from "@/services/PlanoAlimentarService";
@@ -177,6 +184,62 @@ export default class Atendimento extends Vue {
     anamneses: false,
     antropometrico: false,
   };
+  atendimento: Atendimento.Atendimento = {
+    paciente: {
+      id: "",
+    },
+    planoAlimentar: {
+      id: "",
+    },
+    antropometrico: {
+      data: "",
+      idade: 0,
+      descricao: "",
+      altura: 0,
+      peso: 0,
+      ombroCircunferencia: 0,
+      peitoralCircunferencia: 0,
+      cinturaCircunferencia: 0,
+      abdomenCircunferencia: 0,
+      quadrilCircunferencia: 0,
+      panturrilhaDireitaCircunferencia: 0,
+      panturrilhaEsquerdaCircunferencia: 0,
+      pescocoCircunferencia: 0,
+      punhoCircunferencia: 0,
+      coxaDireitaCircunferencia: 0,
+      coxaEsquerdaCircunferencia: 0,
+      bracoDireitoCircunferencia: 0,
+      bracoEsquerdoCircunferencia: 0,
+      antebraco: 0,
+      massaGorda: 0,
+      massaMagra: 0,
+      pesoResidual: 0,
+      pesoOsseo: 0,
+      pesoMuscula: 0,
+    },
+    anamneses: {
+      alergias: [],
+      patologias: [],
+      data: "",
+      alcool: "",
+      tabagismo: "",
+      sono: 0,
+      praticaExercicios: "",
+      medicamentos: "",
+      apetite: "",
+      mastigacao: "",
+      consumoDagua: 0,
+      habitoUrinario: "",
+      habitoIntestinal: "",
+      observacoes: "",
+    },
+  };
+  notification = {
+    open: false,
+    color: "error",
+    title: "Usuário criado com sucesso",
+    message: "",
+  };
   loading = false;
   objetivos: Objective.Objective[] = [];
   planoAlimentares: PlanoAlimentar.PlanoAlimentar[] = [];
@@ -195,12 +258,26 @@ export default class Atendimento extends Vue {
     this.$router.push({ name });
   }
 
-  saveAnamneses() {
-    this.creating.anamneses = false;
-  }
-
-  saveAntropometrico() {
-    this.creating.antropometrico = false;
+  save() {
+    this.atendimento.paciente.id = this.paciente.id;
+    AtendimentoService.save(this.atendimento).then(
+      () => {
+        this.notification = {
+          open: true,
+          color: "success",
+          title: "Atendimento finalizado",
+          message: "Atendimento finalizado com sucesso",
+        };
+      },
+      () => {
+        this.notification = {
+          open: true,
+          color: "error",
+          title: "Erro",
+          message: "Erro ao realizar atendimento",
+        };
+      }
+    );
   }
 
   @Watch("$route")

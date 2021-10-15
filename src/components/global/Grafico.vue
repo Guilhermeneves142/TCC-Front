@@ -10,8 +10,8 @@
           stroke-linecap="round"
           smooth
         >
-          <template v-slot:label="item"
-            >{{ item.value }} {{ unidade }}
+          <template v-slot:label="item">
+            {{ item.value }} {{ unidade }}
           </template>
         </v-sparkline>
       </v-sheet>

@@ -12,7 +12,7 @@ declare global {
       email: string;
       telefone: string;
       celular: string;
-      dataNascimento: string | number;
+      dataNascimento: string;
       genero: string;
       doencas: Doenca.Doenca[];
     }

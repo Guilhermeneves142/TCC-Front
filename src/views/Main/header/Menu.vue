@@ -25,7 +25,7 @@
         v-for="item in items"
         :key="item.title"
         link
-        @click="go(item.rota)"
+        @click="go(item)"
       >
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
@@ -67,7 +67,7 @@ export default class Menu extends Vue {
       icon: "mdi-food-apple-outline",
       rota: "Refeicoes",
     },
-    { title: "Calculadora", icon: "mdi-calculator", rota: "Calculadora" },
+    { title: "Calculadora", icon: "mdi-calculator", open: true },
     { title: "Meus dados", icon: "mdi-account-outline", rota: "Dados" },
     { title: "Sair", icon: "mdi-logout", rota: "Login" },
   ];
@@ -84,8 +84,10 @@ export default class Menu extends Vue {
       .replace(/,/g, "");
   }
 
-  go(route: string) {
-    route != "Calculadora" && this.$router.push({ name: route });
+  go(route: { rota: string; open: boolean }) {
+    if (route.open) {
+      this.$emit("calculadora", true);
+    } else this.$router.push({ name: route.rota });
   }
 }
 </script>

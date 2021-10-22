@@ -51,11 +51,11 @@
             no-data-text="Sem dados disponiveis"
             v-model="paciente.objetivos"
             :items="objetivos"
+            multiple
             item-text="nome"
             hide-details
             class="mx-8"
             dense
-            multiple
             item-value="id"
           />
           <v-btn
@@ -166,6 +166,8 @@ import moment from "moment";
 })
 export default class Atendimento extends Vue {
   @Prop() id!: string;
+  planosAlimentares: PlanoAlimentar.PlanoAlimentar[] = [];
+  objetivos: Objective.Objective[] = [];
   paciente: Paciente.Paciente = {
     doencas: [],
     consultorio: {
@@ -241,7 +243,6 @@ export default class Atendimento extends Vue {
     message: "",
   };
   loading = false;
-  objetivos: Objective.Objective[] = [];
   planoAlimentares: PlanoAlimentar.PlanoAlimentar[] = [];
 
   async mounted() {

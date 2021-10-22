@@ -97,7 +97,7 @@ export default class Calculadora extends Vue {
   altura = 0;
   praticaExercicios = "";
   generos = ["masculino", "feminino"];
-  exercicios = ["Sedentario", "Pouco ativo", "Ativo", "Muito ativo"];
+  exercicios = ["Sedentário", "Pouco ativo", "Ativo", "Muito ativo"];
 
   close() {
     this.$emit("value", false);
@@ -105,7 +105,7 @@ export default class Calculadora extends Vue {
 
   get GEB() {
     return calcs
-      .GEB(this.genero, this.idade, this.peso, this.altura)
+      .GEB(this.genero, this.idade, this.peso, this.altura / 100)
       ?.toFixed(2);
   }
 
@@ -115,7 +115,7 @@ export default class Calculadora extends Vue {
         this.genero,
         this.idade,
         this.peso,
-        this.altura,
+        this.altura / 100,
         this.praticaExercicios
       )
       .toFixed(2);

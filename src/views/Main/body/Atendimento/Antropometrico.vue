@@ -23,7 +23,7 @@
         <v-select
           :items="diagnostic"
           dense
-          label="diagnostic"
+          label="diagnostico"
           style="width: 20"
         />
       </v-col>
@@ -296,12 +296,12 @@ export default class Antropometrico extends Vue {
     return conditions.find((e) => e.condition)?.definition;
   }
 
-  @Watch("altura")
+  @Watch("value.altura")
   handleAlturaChanged() {
     this.$store.commit("ALTURA", this.value.altura / 100);
   }
 
-  @Watch("peso")
+  @Watch("value.peso")
   handlePesoChanged() {
     this.$store.commit("PESO", this.value.peso);
   }

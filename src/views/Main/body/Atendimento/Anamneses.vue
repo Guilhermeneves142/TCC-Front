@@ -123,7 +123,6 @@ import { Component, Model, Vue, Watch } from "vue-property-decorator";
 export default class Anamneses extends Vue {
   @Model() value!: Atendimento.Anamneses;
   alimentos: Alimento.Alimento[] = [];
-  praticaExercicios = "";
 
   async mounted() {
     this.value.data = this.dataAtual;
@@ -136,7 +135,7 @@ export default class Anamneses extends Vue {
     return ["Frequentemente", "Socialmente", "Não"];
   }
   get exerciceFrequency() {
-    return ["Sedentario", "Pouco ativo", "Ativo", "Muito ativo"];
+    return ["Sedentário", "Pouco ativo", "Ativo", "Muito ativo"];
   }
   get apetite() {
     return ["Normal", "Diminuido", "Acelerado"];
@@ -145,9 +144,9 @@ export default class Anamneses extends Vue {
     return ["Rapida", "Normal", "Lenta"];
   }
 
-  @Watch("praticaExercicios")
+  @Watch("value.praticaExercicios")
   handlePraticaExerciciosChanged() {
-    this.$store.commit("EXERCICIOS", this.praticaExercicios);
+    this.$store.commit("EXERCICIOS", this.value.praticaExercicios);
   }
 }
 </script>

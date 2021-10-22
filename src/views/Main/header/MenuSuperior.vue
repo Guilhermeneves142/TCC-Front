@@ -41,11 +41,11 @@ export default class MenuSuperior extends Vue {
       icon: "mdi-food-apple-outline",
       route: "Alimento",
     },
-    {
-      text: "Agenda",
-      icon: "mdi-calendar-month",
-      route: "Agenda",
-    },
+    // {
+    //   text: "Agenda",
+    //   icon: "mdi-calendar-month",
+    //   route: "Agenda",
+    // },
   ];
 
   go(name: string) {

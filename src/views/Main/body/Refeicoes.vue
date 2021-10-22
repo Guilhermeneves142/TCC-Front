@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import RefeicaoService from "@/services/RefeicaoService";
 
 @Component
@@ -62,6 +62,11 @@ export default class Doencas extends Vue {
 
   open() {
     this.$router.push({ name: "NewRefeicao" });
+  }
+
+  @Watch("$route")
+  async handleRouteChanged() {
+    this.refeicoes = await RefeicaoService.findAll();
   }
 }
 </script>

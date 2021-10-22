@@ -15,21 +15,20 @@
           Editar
         </v-btn>
         <v-btn
-          color="primary"
+          color="success"
           dark
           class="mb-2"
           height="100%"
           v-else
-          @click="readonly = true"
+          @click="save()"
         >
-          Voltar
+          Salvar
         </v-btn>
       </v-card-title>
       <v-card-text>
         <v-form v-model="valid">
           <v-row>
             <v-col>
-              {{ nutricionista.nome }}
               <v-label for="nome"> Nome </v-label>
               <v-text-field
                 v-model="nutricionista.nome"
@@ -125,7 +124,6 @@
                 v-else
                 label="Consultorios"
                 persistent-hint
-                return-object
                 single-line
               />
             </v-col>
@@ -140,6 +138,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import NutricionistService from "@/services/NutricionistaService";
 import ConsultorioService from "@/services/ConsultorioService";
+import LoginService from "@/services/LoginService";
 
 @Component
 export default class Dados extends Vue {
@@ -174,6 +173,14 @@ export default class Dados extends Vue {
     this.nutricionista = await NutricionistService.findById(
       this.idNutricionista
     );
+  }
+
+  async save() {
+    this.nutricionista = await NutricionistService.selectConsultorio(
+      String(this.nutricionista.id),
+      String(this.nutricionista.consultorio.id)
+    );
+    this.readonly = true;
   }
 }
 </script>

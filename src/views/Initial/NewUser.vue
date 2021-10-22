@@ -67,7 +67,7 @@
 
               <v-col>
                 <v-text-field
-                  label="CRN"
+                  label="CRN*"
                   v-model="user.crn"
                   :rules="rules.crn"
                 />
@@ -212,6 +212,7 @@ export default class NewUser extends Vue {
       nome: [(v: string) => !!v || "Nome obrigatório"],
       senha: [(v: string) => !!v || "Senha obrigatória"],
       cpf: [(v: string) => !!v || "CPF obrigatório"],
+      crn: [(v: string) => !!v || "CRN obrigatório"],
       email: [(v: string) => !!v || "Email obrigatório"],
       celular: [(v: string) => !!v || "Celular obrigatório"],
       confirmarSenha: [

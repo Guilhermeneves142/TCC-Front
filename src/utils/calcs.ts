@@ -31,6 +31,7 @@ class Calcs {
       if (genero == "masculino") {
         return 662 - 9.53 * idade + FA * (15.91 * peso) + 539.6 * altura;
       } else {
+        console.log(FA);
         return 354 - 6.91 * idade + FA * (9.36 * peso) + 726 * altura;
       }
     }

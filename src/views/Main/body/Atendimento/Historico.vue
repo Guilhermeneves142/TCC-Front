@@ -77,24 +77,52 @@ export default class Historico extends Vue {
   get peso() {
     return this.data
       .filter((e) => e.antropometrico != null)
+      .sort((a, b) => {
+        if (moment(a.createdOn).valueOf() > moment(b.createdOn).valueOf())
+          return 1;
+        else if (moment(a.createdOn).valueOf() < moment(b.createdOn).valueOf())
+          return -1;
+        else return 0;
+      })
       .map((e) => Number(e.antropometrico?.peso));
   }
 
   get altura() {
     return this.data
       .filter((e) => e.antropometrico != null)
+      .sort((a, b) => {
+        if (moment(a.createdOn).valueOf() > moment(b.createdOn).valueOf())
+          return 1;
+        else if (moment(a.createdOn).valueOf() < moment(b.createdOn).valueOf())
+          return -1;
+        else return 0;
+      })
       .map((e) => Number(e.antropometrico?.altura));
   }
 
   get massaMagra() {
     return this.data
       .filter((e) => e.antropometrico != null)
+      .sort((a, b) => {
+        if (moment(a.createdOn).valueOf() > moment(b.createdOn).valueOf())
+          return 1;
+        else if (moment(a.createdOn).valueOf() < moment(b.createdOn).valueOf())
+          return -1;
+        else return 0;
+      })
       .map((e) => Number(e.antropometrico?.massaMagra));
   }
 
   get massaGorda() {
     return this.data
       .filter((e) => e.antropometrico != null)
+      .sort((a, b) => {
+        if (moment(a.createdOn).valueOf() > moment(b.createdOn).valueOf())
+          return 1;
+        else if (moment(a.createdOn).valueOf() < moment(b.createdOn).valueOf())
+          return -1;
+        else return 0;
+      })
       .map((e) => Number(e.antropometrico?.massaGorda));
   }
 
@@ -106,6 +134,13 @@ export default class Historico extends Vue {
           e.antropometrico?.peso &&
           e.antropometrico?.altura
       )
+      .sort((a, b) => {
+        if (moment(a.createdOn).valueOf() > moment(b.createdOn).valueOf())
+          return 1;
+        else if (moment(a.createdOn).valueOf() < moment(b.createdOn).valueOf())
+          return -1;
+        else return 0;
+      })
       .map((e) => {
         if (e.antropometrico?.peso && e.antropometrico?.altura)
           return Number(
@@ -122,6 +157,13 @@ export default class Historico extends Vue {
           e.antropometrico?.peso &&
           e.antropometrico?.altura
       )
+      .sort((a, b) => {
+        if (moment(a.createdOn).valueOf() > moment(b.createdOn).valueOf())
+          return 1;
+        else if (moment(a.createdOn).valueOf() < moment(b.createdOn).valueOf())
+          return -1;
+        else return 0;
+      })
       .map((e) => {
         const { genero, dataNascimento } = e.paciente as Paciente.Paciente;
         if (e.antropometrico?.peso && e.antropometrico?.altura)
@@ -131,7 +173,7 @@ export default class Historico extends Vue {
                 genero,
                 this.calcIdade(dataNascimento),
                 e.antropometrico.peso,
-                e.antropometrico.altura
+                e.antropometrico.altura / 100
               )
               ?.toFixed(2)
           );
@@ -147,6 +189,13 @@ export default class Historico extends Vue {
           e.antropometrico?.altura &&
           e.anamneses?.praticaExercicios
       )
+      .sort((a, b) => {
+        if (moment(a.createdOn).valueOf() > moment(b.createdOn).valueOf())
+          return 1;
+        else if (moment(a.createdOn).valueOf() < moment(b.createdOn).valueOf())
+          return -1;
+        else return 0;
+      })
       .map((e) => {
         const { genero, dataNascimento } = e.paciente as Paciente.Paciente;
         if (
@@ -160,7 +209,7 @@ export default class Historico extends Vue {
                 genero,
                 this.calcIdade(dataNascimento),
                 e.antropometrico.peso,
-                e.antropometrico.altura,
+                e.antropometrico.altura / 100,
                 e.anamneses.praticaExercicios
               )
               ?.toFixed(2)

@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import LoginService from "@/services/LoginService";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import Menu from "./header/Menu.vue";
 import MenuSuperior from "./header/MenuSuperior.vue";
 import calculadora from "@/components/global/Calculadora.vue";
@@ -28,6 +28,13 @@ export default class Main extends Vue {
   openCalculadora = false;
   mounted(): void {
     LoginService.clarifyToken();
+  }
+
+  @Watch("$route")
+  handleRouteChanged() {
+    if (!this.$store.state.idConsultorio) {
+      LoginService.clarifyToken();
+    }
   }
 }
 </script>

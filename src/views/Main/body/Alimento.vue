@@ -235,6 +235,7 @@ export default class Alimento extends Vue {
     { key: "sodio", name: "Sodio" },
     { key: "potassio", name: "Potassio" },
     { key: "cobre", name: "Cobre" },
+    { key: "zinco", name: "Zinco" },
     { key: "tiamina", name: "Tiamina" },
     { key: "riboflavina", name: "Riboflavina" },
     { key: "pirodoxina", name: "Pirodoxina" },

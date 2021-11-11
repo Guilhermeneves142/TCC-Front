@@ -94,7 +94,11 @@
           >
             Voltar
           </v-btn>
-          <v-btn color="primary" @click="save" :disabled="loading || !valid">
+          <v-btn
+            color="primary"
+            @click="save"
+            :disabled="loading || !valid || qttRefeicoes == 0"
+          >
             Salvar
           </v-btn>
         </v-card-actions>
@@ -153,6 +157,10 @@ export default class PlanoAlimentarForm extends Vue {
 
   get consultorio() {
     return this.$store.state.idConsultorio;
+  }
+
+  get qttRefeicoes() {
+    return this.planoAlimentar.refeicoes.length;
   }
 
   get rules() {

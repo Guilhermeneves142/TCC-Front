@@ -11,6 +11,7 @@ declare global {
       paciente: Paciente.Paciente | { id: string };
       planoAlimentar: PlanoAlimentar.PlanoAlimentar | { id: string };
       dataAtendimento?: string;
+      createdOn?: number | string;
     }
 
     interface Antropometrico {

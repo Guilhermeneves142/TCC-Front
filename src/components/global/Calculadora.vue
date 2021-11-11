@@ -16,45 +16,49 @@
       <v-card-text>
         <v-container class="d-flex justify-space-between">
           <div>
-            <h2>Dados</h2>
-            <v-text-field
-              v-model="peso"
-              label="peso"
-              hide-details
-              suffix="kg"
-            />
-            <v-text-field
-              v-model="altura"
-              label="altura"
-              hide-details
-              suffix="cm"
-            />
-            <v-text-field
-              v-model="idade"
-              label="idade"
-              hide-details
-              suffix="anos"
-            />
-            <v-autocomplete
-              v-model="genero"
-              label="Genero"
-              :items="generos"
-              no-data-text="Sem dados disponiveis"
-            />
-            <v-autocomplete
-              v-model="praticaExercicios"
-              label="nivel Atividade Fisica"
-              :items="exercicios"
-              no-data-text="Sem dados disponiveis"
-            />
+            <v-form v-model="valid">
+              <h2>Dados</h2>
+              <v-text-field
+                v-model="peso"
+                label="peso*:"
+                :rules="rules.text"
+                suffix="kg"
+              />
+              <v-text-field
+                v-model="altura"
+                label="altura*:"
+                :rules="rules.text"
+                suffix="cm"
+              />
+              <v-text-field
+                v-model="idade"
+                label="idade*:"
+                :rules="rules.text"
+                suffix="anos"
+              />
+              <v-autocomplete
+                v-model="genero"
+                label="Genero*:"
+                :items="generos"
+                :rules="rules.array"
+                no-data-text="Sem dados disponiveis"
+              />
+              <v-autocomplete
+                v-model="praticaExercicios"
+                label="nivel Atividade Fisica*:"
+                :items="exercicios"
+                :rules="rules.array"
+                no-data-text="Sem dados disponiveis"
+              />
+            </v-form>
           </div>
-          <div>
+          <div v-if="valid">
             <h2>Informações</h2>
             <div class="my-3">IMC: {{ IMC }}</div>
             <div class="my-3">GET: {{ GET }}</div>
             <div class="my-3">GEB: {{ GEB }}</div>
           </div>
-          <div>
+          <div v-if="valid">
             <h2 class="ml-4">IMC</h2>
             <v-simple-table>
               <template v-slot:default>
@@ -96,6 +100,7 @@ export default class Calculadora extends Vue {
   peso = 0;
   altura = 0;
   praticaExercicios = "";
+  valid = false;
   generos = ["masculino", "feminino"];
   exercicios = ["Sedentário", "Pouco ativo", "Ativo", "Muito ativo"];
 
@@ -168,6 +173,13 @@ export default class Calculadora extends Vue {
         select: this.IMC < 16,
       },
     ];
+  }
+
+  get rules() {
+    return {
+      text: [(v: string) => !!v || "Informação obrigatória"],
+      array: [(v: string[]) => v.length > 0 || "Informação obrigatória"],
+    };
   }
 }
 </script>

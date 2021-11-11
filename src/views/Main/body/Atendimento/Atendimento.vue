@@ -1,102 +1,106 @@
 <template>
   <div>
-    <div class="head my-3">
-      <v-row>
-        <v-col cols="4">
-          <v-label> Nome: </v-label>
-          <span>{{ paciente.nome }}</span>
-        </v-col>
+    <v-form v-model="valid">
+      <div class="head my-3">
+        <v-row>
+          <v-col cols="3">
+            <v-label> Nome: </v-label>
+            <span>{{ paciente.nome }}</span>
+          </v-col>
 
-        <v-col cols="5" class="align-center d-flex">
-          <v-label> Plano Alimentar: </v-label>
-          <v-autocomplete
-            no-data-text="Sem dados disponiveis"
-            v-model="atendimento.planoAlimentar.id"
-            :items="planoAlimentares"
-            item-text="nome"
-            class="mx-8"
-            hide-details
-            dense
-            item-value="id"
-          />
-          <v-btn
-            icon
-            color="primary"
-            @click="createData('NewPlanoAlimentarAtendimento')"
-          >
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-        </v-col>
-        <v-col>
-          <v-btn
-            color="success"
-            dark
-            class="mb-2 mr-5"
-            @click="save()"
-            width="100%"
-            height="100%"
-          >
-            Salvar
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="4">
-          <v-label> GEB: </v-label>
-          <span>{{ GEB.toFixed(2) }}</span>
-        </v-col>
-        <v-col cols="5" class="d-flex align-center">
-          <v-label> Objetivos: </v-label>
-          <v-autocomplete
-            no-data-text="Sem dados disponiveis"
-            v-model="paciente.objetivos"
-            :items="objetivos"
-            multiple
-            item-text="nome"
-            hide-details
-            class="mx-8"
-            dense
-            item-value="id"
-          />
-          <v-btn
-            icon
-            color="primary"
-            @click="createData('NewObjetivoAtendimento')"
-          >
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-        </v-col>
+          <v-col cols="6" class="align-center d-flex">
+            <v-label> Plano Alimentar:*</v-label>
+            <v-autocomplete
+              no-data-text="Sem dados disponiveis"
+              v-model="atendimento.planoAlimentar.id"
+              :items="planoAlimentares"
+              :rules="rules.plano"
+              item-text="nome"
+              class="mx-8"
+              hide-details
+              dense
+              item-value="id"
+            />
+            <v-btn
+              icon
+              color="primary"
+              @click="createData('NewPlanoAlimentarAtendimento')"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col cols="3">
+            <v-btn
+              color="success"
+              dark
+              class="mb-2 mr-5"
+              @click="save()"
+              :disabled="!valid"
+              width="100%"
+              height="100%"
+            >
+              Salvar
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="3">
+            <v-label> GEB: </v-label>
+            <span>{{ GEB ? GEB.toFixed(2) : "" }}</span>
+          </v-col>
+          <v-col cols="6" class="d-flex align-center">
+            <v-label> Objetivos: </v-label>
+            <v-autocomplete
+              no-data-text="Sem dados disponiveis"
+              v-model="paciente.objetivos"
+              :items="objetivos"
+              multiple
+              item-text="nome"
+              hide-details
+              class="mx-8"
+              dense
+              item-value="id"
+            />
+            <v-btn
+              icon
+              color="primary"
+              @click="createData('NewObjetivoAtendimento')"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </v-col>
 
-        <v-col cols="3" @click="creating.anamneses = true">
-          <v-btn
-            depressed
-            width="100%"
-            color="primary"
-            v-if="!creating.anamneses"
-          >
-            <v-icon>mdi-plus</v-icon>
-            Anamneses
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-label> GET: </v-label>
-          <span>{{ GET.toFixed(2) }}</span>
-        </v-col>
-        <v-col cols="3" v-if="!creating.antropometrico">
-          <v-btn
-            depressed
-            color="primary"
-            width="100%"
-            @click="creating.antropometrico = true"
-          >
-            <v-icon>mdi-plus</v-icon>
-            Antropométrico
-          </v-btn>
-        </v-col>
-      </v-row>
-    </div>
+          <v-col cols="3" @click="creating.anamneses = true">
+            <v-btn
+              depressed
+              width="100%"
+              color="primary"
+              v-if="!creating.anamneses"
+            >
+              <v-icon>mdi-plus</v-icon>
+              Anamneses
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="9">
+            <v-label> GET: </v-label>
+            <span>{{ GET ? GET.toFixed(2) : "" }}</span>
+          </v-col>
+          <v-col cols="3" v-if="!creating.antropometrico">
+            <v-btn
+              depressed
+              color="primary"
+              width="100%"
+              @click="creating.antropometrico = true"
+            >
+              <v-icon>mdi-plus</v-icon>
+              Antropométrico
+            </v-btn>
+          </v-col>
+        </v-row>
+      </div>
+    </v-form>
     <div class="head my-3" v-if="creating.anamneses">
       <v-card-title>
         <v-row class="d-flex justify-space-between ma-4">
@@ -166,7 +170,6 @@ import moment from "moment";
 })
 export default class Atendimento extends Vue {
   @Prop() id!: string;
-  planosAlimentares: PlanoAlimentar.PlanoAlimentar[] = [];
   objetivos: Objective.Objective[] = [];
   paciente: Paciente.Paciente = {
     doencas: [],
@@ -186,6 +189,7 @@ export default class Atendimento extends Vue {
     anamneses: false,
     antropometrico: false,
   };
+  valid = false;
   atendimento: Atendimento.Atendimento = {
     paciente: {
       id: "",
@@ -245,6 +249,12 @@ export default class Atendimento extends Vue {
   loading = false;
   planoAlimentares: PlanoAlimentar.PlanoAlimentar[] = [];
 
+  get rules() {
+    return {
+      plano: [(v: string) => !!v || "Campo obrigatório"],
+    };
+  }
+
   async mounted() {
     this.paciente = await PacienteService.findById(this.id);
     this.findDataList();
@@ -253,6 +263,18 @@ export default class Atendimento extends Vue {
   async findDataList() {
     this.objetivos = await ObjectiveService.findAll();
     this.planoAlimentares = await PlanoAlimentarService.findAll();
+    AtendimentoService.findLastAtendimento(this.id).then((e) => {
+      this.atendimento = {
+        paciente: e.paciente,
+        planoAlimentar: e.planoAlimentar,
+        anamneses: e.anamneses ? e.anamneses : this.atendimento.anamneses,
+        antropometrico: e.antropometrico
+          ? e.antropometrico
+          : this.atendimento.antropometrico,
+      };
+      this.atendimento.anamneses!.id = undefined;
+      this.atendimento.antropometrico!.id = undefined;
+    });
   }
 
   createData(name: string) {
@@ -269,6 +291,7 @@ export default class Atendimento extends Vue {
           title: "Atendimento finalizado",
           message: "Atendimento finalizado com sucesso",
         };
+        this.$emit("alterComponent");
       },
       () => {
         this.notification = {

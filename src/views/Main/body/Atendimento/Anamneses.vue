@@ -22,7 +22,13 @@
         />
       </v-col>
       <v-col cols="3">
-        <v-text-field label="Sono" type="number" dense v-model="value.sono" />
+        <v-text-field
+          label="Sono"
+          type="number"
+          :max="24"
+          dense
+          v-model="value.sono"
+        />
       </v-col>
       <v-col cols="3">
         <a>{{ dataAtual }}</a>

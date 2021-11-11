@@ -17,6 +17,14 @@ class AtendimentoService {
         .catch((e) => reject(e));
     });
   }
+  findLastAtendimento(id: string) {
+    return new Promise<Atendimento.Atendimento>((resolve, reject) => {
+      http
+        .get(`/atendimento/lastAtendimento/${id}`)
+        .then((e) => resolve(e.data))
+        .catch((e) => reject(e));
+    });
+  }
   save(atendimento: Atendimento.Atendimento) {
     return new Promise<Atendimento.Atendimento>((resolve, reject) => {
       http

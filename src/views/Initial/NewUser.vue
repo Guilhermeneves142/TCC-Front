@@ -210,7 +210,14 @@ export default class NewUser extends Vue {
   get rules(): unknown {
     return {
       nome: [(v: string) => !!v || "Nome obrigatório"],
-      senha: [(v: string) => !!v || "Senha obrigatória"],
+      senha: [
+        (v: string) => !!v || "Senha obrigatória",
+        (v: string) =>
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+            v
+          ) ||
+          "Senha invalida, a senha deve ter no mínimo de oito caracteres, pelo menos, uma letra maiúscula, uma letra minúscula, um número e um caractere especial:",
+      ],
       cpf: [(v: string) => !!v || "CPF obrigatório"],
       crn: [(v: string) => !!v || "CRN obrigatório"],
       email: [(v: string) => !!v || "Email obrigatório"],
